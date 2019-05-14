@@ -1,0 +1,76 @@
+body{
+    background-color:black;
+    width:100%;
+    height:100%;
+    color:white;
+}
+
+main{
+    margin: 0 auto;
+    height:100%;
+    width:70%;
+}
+
+#searchBar{
+    position:absolute;
+    top:50%;
+    bottom:50%;
+    left:50%;
+    right:50%;
+    margin:auto auto;
+    display:none;
+}
+
+#searchResults{
+    display:none;
+}
+
+.movieList{
+    display:flex;
+    flex-flow:row wrap;
+    justify-content: space-around;
+    list-style-type:none;
+}
+
+
+.movie__item{
+    flex-basis: 100px;
+    flex-grow:1;
+    margin:10px; 
+    text-align:center;
+}
+
+.movie__item-image{
+    width:300px;
+    border-radius:10px;
+}
+
+#soundTrackInfoContainer{
+    display:flex;
+    padding:0 0 20px 0;
+}
+
+.youtubeVideoContainer{
+    width:100%;
+    padding:0px 0px 0 20px;
+}
+
+.youtubeVideoContainer iframe{
+    width:100%;
+    height:100%;
+}
+
+#soundTrackList{
+    width:100%;
+}
+
+.song__item{
+    overflow:auto;
+}
+
+.song__title{
+    float:left;
+}
+.song__length{
+    float:right;
+}
