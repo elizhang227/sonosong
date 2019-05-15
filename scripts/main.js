@@ -3,7 +3,7 @@ api_key = "AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk";
 const videoDiv = document.getElementsByClassName('youtubeVideoContainer')[0];
 const searchInput = document.getElementById('searchBarBar');
 let wordInput = '';
-let URL ='';
+let ytURL ='';
 
 function getVideoId(object) {
     let count = 0;
@@ -22,13 +22,13 @@ searchInput.addEventListener('keypress', function(e) {
         //Updates empty string with the inputted search term from search bar
         wordInput += searchInput.value.split(' ').join('+');
         //Updates the query search with the inputted search term from search bar
-        URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${wordInput}&key=${api_key}`;
-        updatePage();
+        ytURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${wordInput}&key=${api_key}`;
+        updateYTPage();
     }
 })
 
-function updatePage() {
-    get(URL)
+function updateYTPage() {
+    get(ytURL)
     .then((response) =>  {
         //some functions here
         getVideoId(response);

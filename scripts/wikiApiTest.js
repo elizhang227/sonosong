@@ -1,5 +1,3 @@
-const searchInput = document.getElementById('searchBarBar');
-
 const soundtrackList = document.getElementById('soundTrackList');
 
 let URL ='';
@@ -60,13 +58,17 @@ function addTrackList() {
         makeClassItem.append(trackItem);
         makeClassItem.append(timeItem);
         soundtrackList.append(makeClassItem);
+
+        trackItem.addEventListener('click', function(e) {
+            e.preventDefault();
+            wordInput = listOfTracks[key].track_name;
+            ytURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${wordInput}&key=${api_key}`
+            console.log(wordInput);
+            updateYTPage();
+        })
         
     })
-
 }
-
-
-
 
 function getAlbum(wikiObject) {
     const content = wikiObject.query.pages[0].revisions[0].content;
@@ -84,21 +86,11 @@ function getAlbum(wikiObject) {
     for(let i = 0; i < tracks.length; i++){
         albumTracks[`title${i+1}`] = {'track_name':tracks[i],'length':tracksSongLength[i]}
     }
-
-    console.log(tracks)
-    console.log(tracksSongLength)
-    console.log(albumTracks)
-
 }
 
 searchInput.addEventListener('keypress', function(e) {
     var key = e.which || e.keyCode;
     if (key === 13) {
-        //Updates empty string with the inputted search term from search bar
-        //wordInput += searchInput.value;
-        //Updates the query search with the inputted search term from search bar
-
-        //URL = `https://en.wikipedia.org/w/api.php?action=query&titles=San_Francisco&prop=images&imlimit=20&origin=*&format=json&formatversion=2`;
         URL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=Avengers:_Endgame_(soundtrack)`;
         updatePage();
     }
