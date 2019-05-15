@@ -70,8 +70,8 @@ function addTrackList() {
 
 function getAlbum(wikiObject) {
     const content = wikiObject.query.pages[0].revisions[0].content;
-    const tracks = content.match(/title\d+.+?(?=\n\| )/g).map((track,index) => track.split(`title${index+1} = `)[1]);
-    const tracksSongLength = content.match(/length\d+.+?(?=\n\| )/g).map((songLength,index) => songLength.split(`length${index+1} = `)[1]);
+    const tracks = content.match(/title\d+.+?(?=\n\| )/g).map((track,index) => track.replace(/title\d+\s*= /g, ''));
+    const tracksSongLength = content.match(/length\d+.+?(?=\n\| )/g).map((songLength,index) => songLength.replace(/length\d+\s*= /g, ''));
     let albumTracks = {};
 
     // we need to get title 
