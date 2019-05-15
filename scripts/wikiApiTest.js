@@ -1,26 +1,5 @@
-// album = {
-//     'title1': {
-//         'name': 'Totally Fine',
-//         'length': '4:29'
-//     },
-//     'title2':{
-//         'name: 'Arrival',
-//         'length': '1:49'
-//     }
-// }
-
-// album = [
-//     ['Totally Fine', '4:29]',
-//     ['Arrival', '1:49']
-// ]
-
-
-//title1 = Totally Fine\n| length1 = 4:29\n| title2 = Arrival\n| length2 = 1:49\n|
-
-
-// const videoDiv = document.getElementsByClassName('youtubeVideoContainer')[0];
 const searchInput = document.getElementById('searchBarBar');
-// let wordInput = '';
+
 let URL ='';
 
 function getAlbum(wikiObject) {
@@ -28,11 +7,18 @@ function getAlbum(wikiObject) {
     const tracks = content.match(/title\d+.+?(?=\n\| )/g).map((track,index) => track.split(`title${index+1} = `)[1]);
     const tracksSongLength = content.match(/length\d+.+?(?=\n\| )/g).map((songLength,index) => songLength.split(`length${index+1} = `)[1]);
     let albumTracks = {};
+
+    // we need to get title 
+
+    // Release date 
+
+    // get composer?
     
+    // create a dictionary for albumtracks
     for(let i = 0; i < tracks.length; i++){
         albumTracks[`title${i+1}`] = {'track name':tracks[i],'length':tracksSongLength[i]}
     }
-    
+
     console.log(tracks)
     console.log(tracksSongLength)
     console.log(albumTracks)
