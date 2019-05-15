@@ -1,11 +1,14 @@
-const searchInput = document.getElementById('searchBarBar');
+const omdb_api_key = '414f1f39';
 
+const searchInput = document.getElementById('searchBarBar');
+let wordInput = '';
 let URL ='';
 
 function getAlbum(wikiObject) {
     const content = wikiObject.query.pages[0].revisions[0].content;
-    const tracks = content.match(/title\d+.+?(?=\n\| )/g).map((track,index) => track.split(`title${index+1} = `)[1]);
-    const tracksSongLength = content.match(/length\d+.+?(?=\n\| )/g).map((songLength,index) => songLength.split(`length${index+1} = `)[1]);
+    const tracks = content.match(/title\d+.+?(?=\n\| )/g).map((track,index) => track.replace(/title\d+\s*= /g, ''));
+    const tracksSongLength = content.match(/length\d+.+?(?=\n\| )/g).map((songLength,index) => songLength.replace(/length\d+\s*= /g, ''));
+    const searchResults = document.getElementById('searchResults');
     let albumTracks = {};
 
     // we need to get title 
@@ -16,9 +19,10 @@ function getAlbum(wikiObject) {
     
     // create a dictionary for albumtracks
     for(let i = 0; i < tracks.length; i++){
-        albumTracks[`title${i+1}`] = {'track name':tracks[i],'length':tracksSongLength[i]}
+        albumTracks[`title${i+1}`] = {'track_name':tracks[i],'length':tracksSongLength[i]};
     }
 
+    searchResults.style.display = 'inline';
     console.log(tracks)
     console.log(tracksSongLength)
     console.log(albumTracks)
@@ -26,15 +30,16 @@ function getAlbum(wikiObject) {
 }
 
 searchInput.addEventListener('keypress', function(e) {
-    var key = e.which || e.keyCode;
+    let key = e.which || e.keyCode;
     if (key === 13) {
-        //Updates empty string with the inputted search term from search bar
-        //wordInput += searchInput.value;
-        //Updates the query search with the inputted search term from search bar
+        wordInput += searchInput.value;
 
-        //URL = `https://en.wikipedia.org/w/api.php?action=query&titles=San_Francisco&prop=images&imlimit=20&origin=*&format=json&formatversion=2`;
-          URL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=Avengers:_Endgame_(soundtrack)`;
+        //URL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=The_Notebook`;
+        URL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=The_Avengers_(soundtrack)`;
+        // Adds a class to the parent div so that the search bar moves up.
         updatePage();
+
+        this.parentElement.classList.add('searchBar--To-Top');
     }
 })
 
