@@ -8,14 +8,19 @@ function getMovies(omdbMovie) {
     const movieList = document.getElementById('movieList');
     movieList.innerHTML = '';
 
-    omdbMovie.Search.forEach(function(movie,index) {
-        // SEARCH INDIVIDUAL FULL
-        var individualMovie = `http://www.omdbapi.com/?i=${movie.imdbID}&plot=full&apikey=${omdb_api_key}`;
-        get(individualMovie)
-            .then(response => getSingleMovie(response,index))
-    });
-
-    searchResults.style.display = 'inline';
+    if(omdbMovie != undefined){
+        if(omdbMovie.Search != undefined){
+            omdbMovie.Search.forEach(function(movie,index) {
+                // SEARCH INDIVIDUAL FULL
+                var individualMovie = `http://www.omdbapi.com/?i=${movie.imdbID}&plot=full&apikey=${omdb_api_key}`;
+                get(individualMovie)
+                    .then(response => getSingleMovie(response,index))
+            });
+            
+            searchResults.style.display = 'inline';
+            searchInput.parentElement.classList.add('searchBar--To-Top');
+        }
+    }
 }
 
 function getSingleMovie(movie, index){
@@ -66,6 +71,5 @@ searchInput.addEventListener('keypress', function(e) {
             getMovies(response);
         });
         // Adds a class to the parent div so that the search bar moves up.
-        this.parentElement.classList.add('searchBar--To-Top');
     }
 })
