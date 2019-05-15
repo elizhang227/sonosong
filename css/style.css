@@ -18,14 +18,19 @@ main{
     left:50%;
     right:50%;
     margin:auto auto;
-    /* display:none; */
+    /* display:none;*/
+}
+
+#searchBar.searchBar--To-Top{
+    top:50px;
+    transition:top 0.8s;
 }
 
 #searchResults{
     display:none;
 }
 
-.movieList{
+#movieList{
     display:flex;
     flex-flow:row wrap;
     justify-content: space-around;
@@ -43,6 +48,10 @@ main{
 .movie__item-image{
     width:300px;
     border-radius:10px;
+}
+
+#soundTrackContainer{
+    display:none;
 }
 
 #soundTrackInfoContainer{
