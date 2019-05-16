@@ -32,18 +32,23 @@ function getSingleMovie(movie, index){
             const movieItem = document.createElement('li');
             const moviePoster = document.createElement('img');
             const movieTitle = document.createElement('figcaption');
+            const movieYear = document.createElement('figcaption');
 
             // Variables to be sent to wiki URL
-            const movieYear = movie.Year;
+            //const movieYear = movie.Year;
 
             // add classes for styling purposes
             movieItem.classList.add('movie__item');
             movieItem.setAttribute('id',`movie${index}`)
             moviePoster.classList.add('movie__item-image');
-            movieTitle.classList.add('movie__title')
+            movieTitle.classList.add('movie__title');
+            movieYear.classList.add('movie__year');
+
             // updating image and h3
             moviePoster.src = movie.Poster;
             movieTitle.textContent = movie.Title;
+            movieYear.textContent = movie.Year;
+            console.log(movieYear);
     
             // appending items
             movieItem.append(moviePoster);
@@ -53,13 +58,16 @@ function getSingleMovie(movie, index){
             // event listener for each movie
             movieItem.addEventListener('click',function(e){
                 // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
+
+                // if api does not have title1 then try title_(film) -> title_(year_film) -> title_(soundtrack)
+                //let wikiURL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=${movieTitle.textContent}_(${movieYear.textContent}_film) `;
                 let wikiURL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=${movieTitle.textContent}`;
-                
+
                 //let wikiURL = 'https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=Avengers:_Endgame_(soundtrack%29';
                 get(wikiURL)
                 .then((response) =>  {
                     console.log(encodeURI(wikiURL))
-                    getAlbum(response);
+                    getAlbum(response,wikiURL,movie.Year);
                     addTrackList();
                 });
             });

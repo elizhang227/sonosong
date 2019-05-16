@@ -43,12 +43,38 @@ function addTrackList(listOfTracks) {
     })
 }
 
-function getAlbum(wikiObject) {
+function getAlbum(wikiObject, wikiURL, movieYear) {
 
     const content = wikiObject.query.pages[0].revisions[0].content;
-    const tracks = content.match(/title\d+.+?(?=\n\| )/g).map((track,index) => track.replace(/title\d+\s*= /g, ''));
-    const tracksSongLength = content.match(/length\d+.+?(?=\n\| )/g).map((songLength,index) => songLength.replace(/length\d+\s*= /g, ''));
+
+    let tracks = '';
+    let tracksSongLength = '';
+    // const tracks = content.match(/title\d+.+?(?=\n\| )/g).map((track,index) => track.replace(/title\d+\s*= /g, ''));
+    // const tracksSongLength = content.match(/length\d+.+?(?=\n\| )/g).map((songLength,index) => songLength.replace(/length\d+\s*= /g, ''));
     let albumTracks = {};
+
+    if (content.includes('title1')) {
+        console.log('YES THIS EXISTS');
+        tracks = content.match(/title\d+.+?(?=\n)/g).map((track,index) => track.replace(/title\d+\s*= /g, ''));
+        console.log(tracks);
+        tracksSongLength = content.match(/length\d+.+?(?=\n)/g).map((songLength,index) => songLength.replace(/length\d+\s*= /g, ''));
+        console.log(tracksSongLength);
+        for(let i = 0; i < tracks.length; i++){
+            albumTracks[`title${i+1}`] = {'track_name':tracks[i],'length':tracksSongLength[i]}
+        }
+        addTrackList(albumTracks);
+    }
+    else {
+        wikiURL = encodeURI(wikiURL);
+        console.log('DOES NOT EXIST');
+        wikiURL += '%20%28'+ movieYear +'%20film%29';
+        console.log(wikiURL);
+        get(wikiURL)
+        .then((response) => {
+            console.log('this is the 2nd time');
+            getAlbum(response);
+        });
+    }
 
     // console.log(wikiObject)
 
@@ -59,11 +85,18 @@ function getAlbum(wikiObject) {
     // get composer?
     
     // create a dictionary for albumtracks
-    for(let i = 0; i < tracks.length; i++){
-        albumTracks[`title${i+1}`] = {'track_name':tracks[i],'length':tracksSongLength[i]}
-    }
+    // for(let i = 0; i < tracks.length; i++){
+    //     albumTracks[`title${i+1}`] = {'track_name':tracks[i],'length':tracksSongLength[i]}
+    // }
 
-    addTrackList(albumTracks)
+    //addTrackList(albumTracks)
+
+    // get(wikiURL)
+    // .then((response) => {
+    //     console.log('this is the 2nd time');
+    //     getAlbum(response);
+    //     addTrackList(albumTracks);
+    // });
 }
 
 // searchInput.addEventListener('keypress', function(e) {
