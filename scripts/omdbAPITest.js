@@ -7,6 +7,7 @@ function getMovies(omdbMovie) {
     const searchResults = document.getElementById('searchResults');
     const movieList = document.getElementById('movieList');
     movieList.innerHTML = '';
+    //searchResults.style.height = '0px';
 
     if(omdbMovie != undefined){
         if(omdbMovie.Search != undefined){
@@ -14,11 +15,27 @@ function getMovies(omdbMovie) {
                 // SEARCH INDIVIDUAL FULL
                 var individualMovie = `http://www.omdbapi.com/?i=${movie.imdbID}&plot=full&apikey=${omdb_api_key}`;
                 get(individualMovie)
-                    .then(response => getSingleMovie(response,index))
+                    .then((response)=>{
+                        let load = document.getElementById('loadingIcon');
+                        load.classList.add('loadingNow')
+
+                        setTimeout(function(){
+                            getSingleMovie(response,index);
+                            document.getElementsByClassName('loadingNow')[0].style.opacity = 0 ;
+                            //searchResults.style.height = movieList.offsetHeight+'px';
+                        }, 1500);
+                    })
+                    .then(()=>{
+                        console.log(movieList.offsetHeight)
+                        searchInput.parentElement.classList.add('searchBar--To-Top')
+                        // setTimeout(function(){
+                        //     searchResults.style.height = movieList.offsetHeight;
+                        // },1500)
+                    })
             });
 
-            searchResults.style.display = 'inline';
-            searchInput.parentElement.classList.add('searchBar--To-Top');
+            //searchResults.style.display = 'inline';
+            //searchInput.parentElement.classList.add('searchBar--To-Top');
         }
     }
 }
