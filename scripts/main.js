@@ -6,7 +6,6 @@ const videoDiv = document.getElementsByClassName('youtubeVideoContainer')[0];
 //let ytURL ='';
 
 function getVideoId(object) {
-    console.log('testing in main js')
     let count = 0;
     let vidId = object.items[count].id.videoId;
     while (vidId === undefined) {
@@ -36,3 +35,4 @@ function getVideoId(object) {
 //     });
 
 // }
+

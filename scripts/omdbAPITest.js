@@ -65,7 +65,7 @@ function getSingleMovie(movie, index){
             moviePoster.src = movie.Poster;
             movieTitle.textContent = movie.Title;
             movieYear.textContent = movie.Year;
-            console.log(movieYear);
+            console.log(movie.Title);
     
             // appending items
             movieItem.append(moviePoster);
@@ -84,8 +84,8 @@ function getSingleMovie(movie, index){
                 get(wikiURL)
                 .then((response) =>  {
                     console.log(encodeURI(wikiURL))
-                    getAlbum(response,wikiURL,movie.Year);
-                    addTrackList();
+                    console.log(movie.Title);
+                    getAlbum(response, wikiURL, movie.Year, movie.Title);
                 });
             });
         }
@@ -110,3 +110,4 @@ searchInput.addEventListener('keypress', function(e) {
         });
     }
 })
+
