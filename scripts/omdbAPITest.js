@@ -16,7 +16,7 @@ function getMovies(omdbMovie) {
                 get(individualMovie)
                     .then(response => getSingleMovie(response,index))
             });
-            
+
             searchResults.style.display = 'inline';
             searchInput.parentElement.classList.add('searchBar--To-Top');
         }
@@ -27,16 +27,20 @@ function getSingleMovie(movie, index){
     if(movie.Runtime != 'N/A'){
         const movieLength = Number(movie.Runtime.match(/\d+/g)[0]);
         if(movieLength != null && movieLength > 60){
+
             // creating elements
             const movieItem = document.createElement('li');
             const moviePoster = document.createElement('img');
-            const movieTitle = document.createElement('h3');
+            const movieTitle = document.createElement('figcaption');
+
+            // Variables to be sent to wiki URL
+            const movieYear = movie.Year;
 
             // add classes for styling purposes
             movieItem.classList.add('movie__item');
             movieItem.setAttribute('id',`movie${index}`)
             moviePoster.classList.add('movie__item-image');
-            
+            movieTitle.classList.add('movie__title')
             // updating image and h3
             moviePoster.src = movie.Poster;
             movieTitle.textContent = movie.Title;
@@ -48,7 +52,16 @@ function getSingleMovie(movie, index){
 
             // event listener for each movie
             movieItem.addEventListener('click',function(e){
-                console.log(this)
+                // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
+                let wikiURL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=${movieTitle.textContent}`;
+                
+                //let wikiURL = 'https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=Avengers:_Endgame_(soundtrack%29';
+                get(wikiURL)
+                .then((response) =>  {
+                    console.log(encodeURI(wikiURL))
+                    getAlbum(response);
+                    addTrackList();
+                });
             });
         }
     }
@@ -70,6 +83,5 @@ searchInput.addEventListener('keypress', function(e) {
         .then((response) =>  {
             getMovies(response);
         });
-        // Adds a class to the parent div so that the search bar moves up.
     }
 })
