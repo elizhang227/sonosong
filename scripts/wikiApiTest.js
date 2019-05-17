@@ -15,7 +15,8 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
     let moviePicName = document.createElement('h2');
 
     //searchResults.style.display = 'none';
-    soundTrackContainer.style.display = 'block';
+    soundTrackContainer.style.transition = 'opacity 1s';
+    soundTrackContainer.style.opacity = '1';
 
     moviePic.src = moviePoster;
     moviePicture.append(moviePic);
@@ -58,15 +59,14 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
 }
 
 function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
+    // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
+    // if api does not have title1 then try title_(film) -> title_(year_film) -> title_(soundtrack)
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29'];
 
     // Going through the pages which is wikiURL + searchURLEnding
     if (searchingPage) {
         console.log('LOADING')
         load.style.opacity = 1;
-        searchResults.style.transition = 'opacity 0.2s';
-        searchResults.style.opacity = '0';
-
         searchPageCount++;
         wikiURL = wikiURL.slice(0, wikiURL.length - searchURLEnding[searchPageCount - 1].length);
     }
@@ -90,10 +90,15 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
             searchingPage = false;
             searchPageCount = 0;
 
-            // Removes loading and sets search results to none
-            load.style.opacity = 0;
-            searchResults.style.display = 'none';
-            setTimeout( addTrackList(albumTracks, movieTitle, moviePoster), 2000);
+            searchResults.style.opacity = 0;
+
+            setTimeout(()=>{
+                load.style.opacity = 0;
+                soundTrackContainer.style.display = 'block';
+
+                searchResults.style.display = 'none';
+                addTrackList(albumTracks, movieTitle, moviePoster);
+            }, 1000);
 
         } else {
             wikiURL = wikiURL + searchURLEnding[searchPageCount];
@@ -103,8 +108,18 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                     getAlbum(response, wikiURL, movieYear, movieTitle, moviePoster);
                 })
                 .catch(err =>{
+                    // RESET
                     searchingPage = false;
                     searchPageCount = 0;
+                    // Removes loading and sets search results to none
+                    load.style.opacity = 0;
+                    searchResults.style.opacity = 0;
+
+                    setTimeout(()=> {
+                        load.style.opacity = 0;
+                        searchResults.style.display = 'none'
+                    }, 1000);
+
                     console.log('NO SOUNDTRACK: '+ err);
                 });
         }
@@ -116,8 +131,17 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                 getAlbum(response, wikiURL, movieYear, movieTitle, moviePoster);
             })
             .catch(err =>{
+                // RESET
                 searchingPage = false;
                 searchPageCount = 0;
+                // Removes loading and sets search results to none
+                searchResults.style.opacity = 0;
+
+                setTimeout(()=> {
+                    load.style.opacity = 0;
+                    searchResults.style.display = 'none'
+                }, 1000);
+
                 console.log('NO SOUNDTRACK: '+ err);
             });
     }
