@@ -60,6 +60,7 @@ function getSingleMovie(movie, index){
             moviePoster.src = movie.Poster;
             movieTitle.textContent = movie.Title;
             movieYear.textContent = movie.Year;
+            console.log(moviePoster.src);
     
             // appending items
             movieItem.append(moviePoster);
@@ -77,7 +78,7 @@ function getSingleMovie(movie, index){
                 //let wikiURL = 'https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=Avengers:_Endgame_(soundtrack%29';
                 get(wikiURL)
                 .then((response) =>  {
-                    getAlbum(response, wikiURL, movie.Year, movie.Title);
+                    getAlbum(response, wikiURL, movie.Year, movie.Title, moviePoster.src);
                 });
             });
         }
