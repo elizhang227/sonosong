@@ -64,9 +64,21 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
 
     // creating error message for when soundtrack not found for movie
     const body = document.getElementById('bodyclass');
-    let noSoundTrack = document.createElement('div');
+
+    //////////////////
+    // LEBRON JAMES //
+    //////////////////
+
+    let noSoundTrack = document.createElement('iframe');
     noSoundTrack.setAttribute('id', 'noSoundTrack');
-    noSoundTrack.textContent = 'NO SOUNDTRACK SUCKER';
+    noSoundTrack.src = 'https://www.youtube.com/embed/5y_cl3WIO6A?autoplay=1&loop=1&playlist=5y_cl3WIO6A';
+    noSoundTrack.setAttribute('frameborder',0);
+    noSoundTrack.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+    noSoundTrack.setAttribute('allowfullscreen','');
+
+    //////////////////
+    // LEBRON JAMES //
+    //////////////////
 
     // Going through the pages which is wikiURL + searchURLEnding
     if (searchingPage) {
