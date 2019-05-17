@@ -88,6 +88,31 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
         wikiURL = wikiURL.slice(0, wikiURL.length - searchURLEnding[searchPageCount - 1].length);
     }
 
+    // Function to catch errors and change wikiURL
+    function catchError() {
+        wikiURL = wikiURL + searchURLEnding[searchPageCount];
+        get(wikiURL)
+            .then((response) => {
+                searchingPage = true;
+                getAlbum(response, wikiURL, movieYear, movieTitle, moviePoster);
+            })
+            .catch(err =>{
+                // RESET
+                searchingPage = false;
+                searchPageCount = 0;
+                // Removes loading and sets search results to none
+                searchResults.style.opacity = 0;
+    
+                setTimeout(()=> {
+                    load.style.opacity = 0;
+                    searchResults.style.display = 'none'
+                }, 1000);
+    
+                // If no soundtrack available for movie appends error message
+                body.append(noSoundTrack);
+            });
+    }
+
     if (!wikiObject.query.pages[0].missing) {
         const content = wikiObject.query.pages[0].revisions[0].content;
 
@@ -118,49 +143,9 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
             }, 1000);
 
         } else {
-            wikiURL = wikiURL + searchURLEnding[searchPageCount];
-            get(wikiURL)
-                .then((response) => {
-                    searchingPage = true;
-                    getAlbum(response, wikiURL, movieYear, movieTitle, moviePoster);
-                })
-                .catch(err =>{
-                    // RESET
-                    searchingPage = false;
-                    searchPageCount = 0;
-                    // Removes loading and sets search results to none
-                    load.style.opacity = 0;
-                    searchResults.style.opacity = 0;
-
-                    setTimeout(()=> {
-                        load.style.opacity = 0;
-                        searchResults.style.display = 'none'
-                    }, 1000);
-
-                    body.append(noSoundTrack);
-                });
+            catchError();
         }
     } else {
-        wikiURL = wikiURL + searchURLEnding[searchPageCount];
-        get(wikiURL)
-            .then((response) => {
-                searchingPage = true;
-                getAlbum(response, wikiURL, movieYear, movieTitle, moviePoster);
-            })
-            .catch(err =>{
-                // RESET
-                searchingPage = false;
-                searchPageCount = 0;
-                // Removes loading and sets search results to none
-                searchResults.style.opacity = 0;
-
-                setTimeout(()=> {
-                    load.style.opacity = 0;
-                    searchResults.style.display = 'none'
-                }, 1000);
-
-                // If no soundtrack available for movie appends error message
-                body.append(noSoundTrack);
-            });
+        catchError();
     }
 }
