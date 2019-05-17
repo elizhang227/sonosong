@@ -1,19 +1,21 @@
 const api_key = "AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk";
-
 const soundtrackList = document.getElementById('soundTrackList');
+
+let searchPageCount = 0;
+let searchingPage = false;
 
 function addTrackList(listOfTracks, movieTitle) {
     let count = 1;
     const searchResults = document.getElementById('searchResults');
     const soundTrackContainer = document.getElementById('soundTrackContainer');
 
-    searchResults.style.display = 'none';
+    //searchResults.style.display = 'none';
     soundTrackContainer.style.display = 'block';
-    
-    Object.keys(listOfTracks).forEach(function(key) {
+
+    Object.keys(listOfTracks).forEach(function (key) {
         let makeClassItem = document.createElement('li');
         makeClassItem.classList.add('song__item');
-        
+
         let trackItem = document.createElement('span');
         trackItem.classList.add('song__title');
         trackItem.textContent = `${count}. ` + listOfTracks[key].track_name;
@@ -27,7 +29,7 @@ function addTrackList(listOfTracks, movieTitle) {
         makeClassItem.append(timeItem);
         soundtrackList.append(makeClassItem);
 
-        makeClassItem.addEventListener('click', function(e) {
+        makeClassItem.addEventListener('click', function (e) {
             e.preventDefault();
             wordInput = listOfTracks[key].track_name + ' ' + movieTitle;
             //wordInput = listOfTracks[key].track_name + ' ' + movieName + ' song';
@@ -36,53 +38,58 @@ function addTrackList(listOfTracks, movieTitle) {
             // console.log(wordInput);
             // updateYTPage();
             get(ytURL)
-            .then((response) =>  {
-                //some functions here
-                getVideoId(response);
-            });
+                .then((response) => {
+                    //some functions here
+                    getVideoId(response);
+                });
         })
-        
+
     })
 }
 
 function getAlbum(wikiObject, wikiURL, movieYear, name) {
-
-    const content = wikiObject.query.pages[0].revisions[0].content;
-    //const movieName = wikiObject.query.pages[0].title;
-
-    let tracks = '';
-    let tracksSongLength = '';
-    let albumTracks = {};
-
-    console.log(name);
-    if (content.includes('title1')) {
-        console.log('YES THIS EXISTS');
-        tracks = content.match(/title\d+.+?(?=\n)/g).map((track,index) => track.replace(/title\d+\s*= /g, ''));
-        console.log(tracks);
-        tracksSongLength = content.match(/length\d+.+?(?=\n)/g).map((songLength,index) => songLength.replace(/length\d+\s*= /g, ''));
-        console.log(tracksSongLength);
-        for(let i = 0; i < tracks.length; i++){
-            albumTracks[`title${i+1}`] = {'track_name':tracks[i],'length':tracksSongLength[i]}
-        }
-        addTrackList(albumTracks, name);
-        //console.log(mov);
-        //addTrackList(albumTracks, movieName);
+    const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29'];
+    if (searchingPage) {
+        searchPageCount++
+        wikiURL = wikiURL.slice(0, wikiURL.length - searchURLEnding[searchPageCount - 1].length)
     }
 
-    // else if (content.includes('title1') === false) {
+    if (!wikiObject.query.pages[0].missing) {
+        const content = wikiObject.query.pages[0].revisions[0].content;
 
-    // }
+        let tracks = '';
+        let tracksSongLength = '';
+        let albumTracks = {};
 
-    else {
-        wikiURL = encodeURI(wikiURL);
-        console.log('DOES NOT EXIST');
-        wikiURL += '%20%28'+ movieYear +'%20film%29';
-        console.log(wikiURL);
+        if (content.includes('title1')) {
+            tracks = content.match(/title\d+.+?(?=\n)/g).map((track) => track.replace(/title\d+\s*= /g, ''));
+            tracksSongLength = content.match(/length\d+.+?(?=\n)/g).map((songLength) => songLength.replace(/length\d+\s*= /g, ''));
+
+            for (let i = 0; i < tracks.length; i++) {
+                albumTracks[`title${i + 1}`] = { 'track_name': tracks[i], 'length': tracksSongLength[i] }
+            }
+
+            // RESET
+            searchingPage = false;
+            searchPageCount = 0;
+
+            addTrackList(albumTracks, name);
+
+        } else {
+            wikiURL = wikiURL + searchURLEnding[searchPageCount];
+            get(wikiURL)
+                .then((response) => {
+                    searchingPage = true;
+                    getAlbum(response, wikiURL, movieYear, name);
+                }).catch(err => console.log('NO SOUNDTRACK') + err);
+        }
+    } else {
+        wikiURL = wikiURL + searchURLEnding[searchPageCount];
         get(wikiURL)
-        .then((response) => {
-            console.log('this is the 2nd time');
-            getAlbum(response, wikiURL, movieYear, name);
-        });
+            .then((response) => {
+                searchingPage = true;
+                getAlbum(response, wikiURL, movieYear, name);
+            }).catch(err => console.log('NO SOUNDTRACK') + err);
     }
 
     // console.log(wikiObject)
@@ -92,7 +99,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
     // Release date 
 
     // get composer?
-    
+
     // create a dictionary for albumtracks
     // for(let i = 0; i < tracks.length; i++){
     //     albumTracks[`title${i+1}`] = {'track_name':tracks[i],'length':tracksSongLength[i]}
