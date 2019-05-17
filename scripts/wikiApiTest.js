@@ -125,7 +125,6 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                         searchResults.style.display = 'none'
                     }, 1000);
 
-                    console.log('NO SOUNDTRACK: '+ err);
                     body.append(noSoundTrack);
                 });
         }
@@ -148,7 +147,6 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                     searchResults.style.display = 'none'
                 }, 1000);
 
-                console.log('NO SOUNDTRACK: '+ err);
                 // If no soundtrack available for movie appends error message
                 body.append(noSoundTrack);
             });
