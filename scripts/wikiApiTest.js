@@ -2,7 +2,7 @@ const api_key = "AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk";
 
 const soundtrackList = document.getElementById('soundTrackList');
 
-function addTrackList(listOfTracks) {
+function addTrackList(listOfTracks, movieTitle) {
     let count = 1;
     const searchResults = document.getElementById('searchResults');
     const soundTrackContainer = document.getElementById('soundTrackContainer');
@@ -29,7 +29,9 @@ function addTrackList(listOfTracks) {
 
         makeClassItem.addEventListener('click', function(e) {
             e.preventDefault();
-            wordInput = listOfTracks[key].track_name;
+            wordInput = listOfTracks[key].track_name + ' ' + movieTitle;
+            //wordInput = listOfTracks[key].track_name + ' ' + movieName + ' song';
+            console.log(wordInput);
             ytURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${wordInput}&key=${api_key}`
             // console.log(wordInput);
             // updateYTPage();
@@ -43,16 +45,16 @@ function addTrackList(listOfTracks) {
     })
 }
 
-function getAlbum(wikiObject, wikiURL, movieYear) {
+function getAlbum(wikiObject, wikiURL, movieYear, name) {
 
     const content = wikiObject.query.pages[0].revisions[0].content;
+    //const movieName = wikiObject.query.pages[0].title;
 
     let tracks = '';
     let tracksSongLength = '';
-    // const tracks = content.match(/title\d+.+?(?=\n\| )/g).map((track,index) => track.replace(/title\d+\s*= /g, ''));
-    // const tracksSongLength = content.match(/length\d+.+?(?=\n\| )/g).map((songLength,index) => songLength.replace(/length\d+\s*= /g, ''));
     let albumTracks = {};
 
+    console.log(name);
     if (content.includes('title1')) {
         console.log('YES THIS EXISTS');
         tracks = content.match(/title\d+.+?(?=\n)/g).map((track,index) => track.replace(/title\d+\s*= /g, ''));
@@ -62,8 +64,15 @@ function getAlbum(wikiObject, wikiURL, movieYear) {
         for(let i = 0; i < tracks.length; i++){
             albumTracks[`title${i+1}`] = {'track_name':tracks[i],'length':tracksSongLength[i]}
         }
-        addTrackList(albumTracks);
+        addTrackList(albumTracks, name);
+        //console.log(mov);
+        //addTrackList(albumTracks, movieName);
     }
+
+    // else if (content.includes('title1') === false) {
+
+    // }
+
     else {
         wikiURL = encodeURI(wikiURL);
         console.log('DOES NOT EXIST');
@@ -72,7 +81,7 @@ function getAlbum(wikiObject, wikiURL, movieYear) {
         get(wikiURL)
         .then((response) => {
             console.log('this is the 2nd time');
-            getAlbum(response);
+            getAlbum(response, wikiURL, movieYear, name);
         });
     }
 
