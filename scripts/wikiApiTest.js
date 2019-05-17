@@ -2,18 +2,27 @@ const api_key = "AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk";
 const soundtrackList = document.getElementById('soundTrackList');
 const searchResults = document.getElementById('searchResults');
 const load = document.getElementById('loadingIcon');
+const moviePicture = document.getElementById('moviePicture-image');
 
 let searchPageCount = 0;
 let searchingPage = false;
 
-function addTrackList(listOfTracks, movieTitle) {
+function addTrackList(listOfTracks, movieTitle, moviePoster) {
     let count = 1;
     //const searchResults = document.getElementById('searchResults');
     const soundTrackContainer = document.getElementById('soundTrackContainer');
+    const moviePic = document.createElement('img');
+    let moviePicName = document.createElement('h2');
 
     //searchResults.style.display = 'none';
     soundTrackContainer.style.transition = 'opacity 1s';
     soundTrackContainer.style.opacity = '1';
+
+    moviePic.src = moviePoster;
+    moviePicture.append(moviePic);
+    moviePicName = movieTitle;
+    moviePicture.append(moviePicName);
+    
 
     Object.keys(listOfTracks).forEach(function (key) {
         let makeClassItem = document.createElement('li');
@@ -35,7 +44,6 @@ function addTrackList(listOfTracks, movieTitle) {
         makeClassItem.addEventListener('click', function (e) {
             e.preventDefault();
             wordInput = listOfTracks[key].track_name + ' ' + movieTitle;
-            //wordInput = listOfTracks[key].track_name + ' ' + movieName + ' song';
             console.log(wordInput);
             ytURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${wordInput}&key=${api_key}`
             // console.log(wordInput);
@@ -50,7 +58,7 @@ function addTrackList(listOfTracks, movieTitle) {
     })
 }
 
-function getAlbum(wikiObject, wikiURL, movieYear, name) {
+function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
     // if api does not have title1 then try title_(film) -> title_(year_film) -> title_(soundtrack)
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29'];
@@ -82,7 +90,6 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
             searchingPage = false;
             searchPageCount = 0;
 
-            // Removes loading and hides our movie results
             searchResults.style.opacity = 0;
 
             setTimeout(()=>{
@@ -90,7 +97,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
                 soundTrackContainer.style.display = 'block';
 
                 searchResults.style.display = 'none';
-                addTrackList(albumTracks, name);
+                addTrackList(albumTracks, movieTitle, moviePoster);
             }, 1000);
 
         } else {
@@ -98,7 +105,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
             get(wikiURL)
                 .then((response) => {
                     searchingPage = true;
-                    getAlbum(response, wikiURL, movieYear, name);
+                    getAlbum(response, wikiURL, movieYear, movieTitle, moviePoster);
                 })
                 .catch(err =>{
                     // RESET
@@ -121,7 +128,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
         get(wikiURL)
             .then((response) => {
                 searchingPage = true;
-                getAlbum(response, wikiURL, movieYear, name);
+                getAlbum(response, wikiURL, movieYear, movieTitle, moviePoster);
             })
             .catch(err =>{
                 // RESET

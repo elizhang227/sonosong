@@ -82,6 +82,7 @@ function getSingleMovie(movie, index){
             moviePoster.src = movie.Poster;
             movieTitle.textContent = movie.Title;
             movieYear.textContent = movie.Year;
+            console.log(moviePoster.src);
     
             // appending items
             movieItem.append(moviePoster);
@@ -94,7 +95,7 @@ function getSingleMovie(movie, index){
 
                 get(wikiURL)
                 .then((response) =>  {
-                    getAlbum(response, wikiURL, movie.Year, movie.Title);
+                    getAlbum(response, wikiURL, movie.Year, movie.Title, moviePoster.src);
                 });
             });
         }
