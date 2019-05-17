@@ -24,9 +24,9 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
     moviePicName.textContent = movieTitle;
     moviePicName.classList.add('moviePicture-image-name');
     moviePicture.append(moviePicName);
-    
 
     Object.keys(listOfTracks).forEach(function (key) {
+
         let makeClassItem = document.createElement('li');
         makeClassItem.classList.add('song__item');
 
@@ -56,7 +56,6 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
                     getVideoId(response);
                 });
         })
-
     })
 }
 
@@ -103,8 +102,8 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
             setTimeout(()=>{
                 load.style.opacity = 0;
                 soundTrackContainer.style.display = 'block';
-
                 searchResults.style.display = 'none';
+
                 addTrackList(albumTracks, movieTitle, moviePoster);
             }, 1000);
 
@@ -129,6 +128,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                     }, 1000);
 
                     console.log('NO SOUNDTRACK: '+ err);
+                    body.append(noSoundTrack);
                 });
         }
     } else {

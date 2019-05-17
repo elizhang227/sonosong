@@ -9,6 +9,11 @@ function getMovies(omdbMovie) {
     const searchResults = document.getElementById('searchResults');
     const movieList = document.getElementById('movieList');
 
+    // Resets the soundtrack container elements
+    document.getElementById('moviePicture-image').innerHTML = '';
+    document.getElementById('soundTrackList').innerHTML = '';
+    document.getElementsByClassName('youtubeVideoContainer')[0].childNodes[1].src = '';
+    
     // Empties the list to populate searches
     if(omdbMovie != undefined){
         if(omdbMovie.Search != undefined){
@@ -79,11 +84,15 @@ function getSingleMovie(movie, index){
             movieYear.classList.add('movie__year');
 
             // updating image and h3
-            moviePoster.src = movie.Poster;
             movieTitle.textContent = movie.Title;
             movieYear.textContent = movie.Year;
-            console.log(moviePoster.src);
-    
+
+            if(movie.Poster == 'N/A'){
+                moviePoster.src = './images/404Poster.jpg'
+            } else {
+                moviePoster.src = movie.Poster;
+            }    
+
             // appending items
             movieItem.append(moviePoster);
             movieItem.append(movieTitle);
@@ -120,4 +129,3 @@ searchInput.addEventListener('keypress', function(e) {
         });
     }
 })
-
