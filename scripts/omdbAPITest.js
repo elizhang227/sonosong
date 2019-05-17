@@ -14,6 +14,7 @@ function getMovies(omdbMovie) {
             searchResults.style.opacity = 0;
 
             omdbMovie.Search.forEach(function(movie,index) {
+                
                 // SEARCH INDIVIDUAL FULL
                 let individualMovie = `http://www.omdbapi.com/?i=${movie.imdbID}&plot=full&apikey=${omdb_api_key}`;
                 get(individualMovie)
@@ -30,9 +31,6 @@ function getMovies(omdbMovie) {
                         }, 1500);
                     })
             });
-
-            //searchResults.style.display = 'inline';
-            //searchInput.parentElement.classList.add('searchBar--To-Top');
         }
     }
 }
