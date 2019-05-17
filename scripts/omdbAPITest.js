@@ -1,26 +1,48 @@
 const omdb_api_key = '414f1f39';
 const searchInput = document.getElementById('searchBarBar');
 const movieItem = document.getElementsByClassName('movie__item');
+const soundTrackContainer = document.getElementById('soundTrackContainer');
+
 let URL = '';
 
 function getMovies(omdbMovie) {
     const searchResults = document.getElementById('searchResults');
     const movieList = document.getElementById('movieList');
-    movieList.innerHTML = '';
 
+    // Empties the list to populate searches
     if(omdbMovie != undefined){
         if(omdbMovie.Search != undefined){
+            // CSS Stylings for when we have movies
             searchResults.style.transition = 'opacity 1s';
             searchResults.style.opacity = 0;
+            setTimeout(()=>{
+                searchResults.style.display = 'block'
+                movieList.innerHTML = '';
+            }, 1000);
+
+            // Checks if the user has soundTrackContainer displayed
+            // It will be displayed if the movie has or doesnt have a soundtrack
+            if(soundTrackContainer.style.display == 'block'){
+
+                // Used time out function to wait for transition
+                soundTrackContainer.style.transition = 'opacity 1s';
+                soundTrackContainer.style.opacity = 0;
+                setTimeout(()=>soundTrackContainer.style.display = 'none', 1000);
+            }
 
             omdbMovie.Search.forEach(function(movie,index) {
-                
+
                 // SEARCH INDIVIDUAL FULL
                 let individualMovie = `http://www.omdbapi.com/?i=${movie.imdbID}&plot=full&apikey=${omdb_api_key}`;
                 get(individualMovie)
                     .then((response)=>{
                         const load = document.getElementById('loadingIcon');
-                        load.classList.add('loadingNow');
+
+                        if(load.classList.value.indexOf('loadingNow') == -1 ){
+                            load.classList.add('loadingNow');
+                        } else {
+                            document.getElementsByClassName('loadingNow')[0].style.opacity = 1;
+                        }
 
                         searchInput.parentElement.classList.add('searchBar--To-Top')
 
@@ -68,13 +90,8 @@ function getSingleMovie(movie, index){
 
             // event listener for each movie
             movieItem.addEventListener('click',function(e){
-                // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
-
-                // if api does not have title1 then try title_(film) -> title_(year_film) -> title_(soundtrack)
-                //let wikiURL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=${movieTitle.textContent}_(${movieYear.textContent}_film) `;
                 let wikiURL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=${movieTitle.textContent}`;
 
-                //let wikiURL = 'https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=Avengers:_Endgame_(soundtrack%29';
                 get(wikiURL)
                 .then((response) =>  {
                     getAlbum(response, wikiURL, movie.Year, movie.Title);
