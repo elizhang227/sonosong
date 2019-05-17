@@ -1,7 +1,8 @@
-const omdb_api_key = '414f1f39';
-const searchInput = document.getElementById('searchBarBar');
-const movieItem = document.getElementsByClassName('movie__item');
-const soundTrackContainer = document.getElementById('soundTrackContainer');
+const 
+    omdb_api_key = '414f1f39',
+    searchInput = document.getElementById('searchBarBar'),
+    movieItem = document.getElementsByClassName('movie__item'),
+    soundTrackContainer = document.getElementById('soundTrackContainer');
 
 let URL = '';
 
@@ -28,7 +29,6 @@ function getMovies(omdbMovie) {
             // Checks if the user has soundTrackContainer displayed
             // It will be displayed if the movie has or doesnt have a soundtrack
             if(soundTrackContainer.style.display == 'block'){
-
                 // Used time out function to wait for transition
                 soundTrackContainer.style.transition = 'opacity 1s';
                 soundTrackContainer.style.opacity = 0;
@@ -36,7 +36,6 @@ function getMovies(omdbMovie) {
             }
 
             omdbMovie.Search.forEach(function(movie,index) {
-
                 // SEARCH INDIVIDUAL FULL
                 let individualMovie = `http://www.omdbapi.com/?i=${movie.imdbID}&plot=full&apikey=${omdb_api_key}`;
                 get(individualMovie)
@@ -73,9 +72,6 @@ function getSingleMovie(movie, index){
             const movieTitle = document.createElement('figcaption');
             const movieYear = document.createElement('figcaption');
 
-            // Variables to be sent to wiki URL
-            //const movieYear = movie.Year;
-
             // add classes for styling purposes
             movieItem.classList.add('movie__item');
             movieItem.setAttribute('id',`movie${index}`)
@@ -87,6 +83,7 @@ function getSingleMovie(movie, index){
             movieTitle.textContent = movie.Title;
             movieYear.textContent = movie.Year;
 
+            // sets movie poster to 404 image if none is found
             if(movie.Poster == 'N/A'){
                 moviePoster.src = './images/404Poster.jpg'
             } else {
@@ -101,7 +98,6 @@ function getSingleMovie(movie, index){
             // event listener for each movie
             movieItem.addEventListener('click',function(e){
                 let wikiURL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=${movieTitle.textContent}`;
-
                 get(wikiURL)
                 .then((response) =>  {
                     getAlbum(response, wikiURL, movie.Year, movie.Title, moviePoster.src);
@@ -109,13 +105,6 @@ function getSingleMovie(movie, index){
             });
         }
     }
-}
-
-function updatePage() {
-    get(URL)
-    .then((response) =>  {
-        getMovies(response);
-    });
 }
 
 searchInput.addEventListener('keypress', function(e) {
