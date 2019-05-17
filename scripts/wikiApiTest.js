@@ -1,12 +1,14 @@
 const api_key = "AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk";
 const soundtrackList = document.getElementById('soundTrackList');
+const searchResults = document.getElementById('searchResults');
+const load = document.getElementById('loadingIcon');
 
 let searchPageCount = 0;
 let searchingPage = false;
 
 function addTrackList(listOfTracks, movieTitle) {
     let count = 1;
-    const searchResults = document.getElementById('searchResults');
+    //const searchResults = document.getElementById('searchResults');
     const soundTrackContainer = document.getElementById('soundTrackContainer');
 
     //searchResults.style.display = 'none';
@@ -49,9 +51,16 @@ function addTrackList(listOfTracks, movieTitle) {
 
 function getAlbum(wikiObject, wikiURL, movieYear, name) {
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29'];
+
+    // Going through the pages which is wikiURL + searchURLEnding
     if (searchingPage) {
-        searchPageCount++
-        wikiURL = wikiURL.slice(0, wikiURL.length - searchURLEnding[searchPageCount - 1].length)
+        console.log('LOADING')
+        load.style.opacity = 1;
+        searchResults.style.transition = 'opacity 0.2s';
+        searchResults.style.opacity = '0';
+
+        searchPageCount++;
+        wikiURL = wikiURL.slice(0, wikiURL.length - searchURLEnding[searchPageCount - 1].length);
     }
 
     if (!wikiObject.query.pages[0].missing) {
@@ -73,7 +82,10 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
             searchingPage = false;
             searchPageCount = 0;
 
-            addTrackList(albumTracks, name);
+            // Removes loading and sets search results to none
+            load.style.opacity = 0;
+            searchResults.style.display = 'none';
+            setTimeout( addTrackList(albumTracks, name), 2000);
 
         } else {
             wikiURL = wikiURL + searchURLEnding[searchPageCount];
@@ -81,7 +93,12 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
                 .then((response) => {
                     searchingPage = true;
                     getAlbum(response, wikiURL, movieYear, name);
-                }).catch(err => console.log('NO SOUNDTRACK') + err);
+                })
+                .catch(err =>{
+                    searchingPage = false;
+                    searchPageCount = 0;
+                    console.log('NO SOUNDTRACK: '+ err);
+                });
         }
     } else {
         wikiURL = wikiURL + searchURLEnding[searchPageCount];
@@ -89,7 +106,12 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
             .then((response) => {
                 searchingPage = true;
                 getAlbum(response, wikiURL, movieYear, name);
-            }).catch(err => console.log('NO SOUNDTRACK') + err);
+            })
+            .catch(err =>{
+                searchingPage = false;
+                searchPageCount = 0;
+                console.log('NO SOUNDTRACK: '+ err);
+            });
     }
 
     // console.log(wikiObject)
