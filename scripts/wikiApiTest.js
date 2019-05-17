@@ -12,7 +12,8 @@ function addTrackList(listOfTracks, movieTitle) {
     const soundTrackContainer = document.getElementById('soundTrackContainer');
 
     //searchResults.style.display = 'none';
-    soundTrackContainer.style.display = 'block';
+    soundTrackContainer.style.transition = 'opacity 1s';
+    soundTrackContainer.style.opacity = '1';
 
     Object.keys(listOfTracks).forEach(function (key) {
         let makeClassItem = document.createElement('li');
@@ -50,15 +51,14 @@ function addTrackList(listOfTracks, movieTitle) {
 }
 
 function getAlbum(wikiObject, wikiURL, movieYear, name) {
+    // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
+    // if api does not have title1 then try title_(film) -> title_(year_film) -> title_(soundtrack)
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29'];
 
     // Going through the pages which is wikiURL + searchURLEnding
     if (searchingPage) {
         console.log('LOADING')
         load.style.opacity = 1;
-        searchResults.style.transition = 'opacity 0.2s';
-        searchResults.style.opacity = '0';
-
         searchPageCount++;
         wikiURL = wikiURL.slice(0, wikiURL.length - searchURLEnding[searchPageCount - 1].length);
     }
@@ -82,10 +82,16 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
             searchingPage = false;
             searchPageCount = 0;
 
-            // Removes loading and sets search results to none
-            load.style.opacity = 0;
-            searchResults.style.display = 'none';
-            setTimeout( addTrackList(albumTracks, name), 2000);
+            // Removes loading and hides our movie results
+            searchResults.style.opacity = 0;
+
+            setTimeout(()=>{
+                load.style.opacity = 0;
+                soundTrackContainer.style.display = 'block';
+
+                searchResults.style.display = 'none';
+                addTrackList(albumTracks, name);
+            }, 1000);
 
         } else {
             wikiURL = wikiURL + searchURLEnding[searchPageCount];
@@ -95,8 +101,18 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
                     getAlbum(response, wikiURL, movieYear, name);
                 })
                 .catch(err =>{
+                    // RESET
                     searchingPage = false;
                     searchPageCount = 0;
+                    // Removes loading and sets search results to none
+                    load.style.opacity = 0;
+                    searchResults.style.opacity = 0;
+
+                    setTimeout(()=> {
+                        load.style.opacity = 0;
+                        searchResults.style.display = 'none'
+                    }, 1000);
+
                     console.log('NO SOUNDTRACK: '+ err);
                 });
         }
@@ -108,49 +124,18 @@ function getAlbum(wikiObject, wikiURL, movieYear, name) {
                 getAlbum(response, wikiURL, movieYear, name);
             })
             .catch(err =>{
+                // RESET
                 searchingPage = false;
                 searchPageCount = 0;
+                // Removes loading and sets search results to none
+                searchResults.style.opacity = 0;
+
+                setTimeout(()=> {
+                    load.style.opacity = 0;
+                    searchResults.style.display = 'none'
+                }, 1000);
+
                 console.log('NO SOUNDTRACK: '+ err);
             });
     }
-
-    // console.log(wikiObject)
-
-    // we need to get title 
-
-    // Release date 
-
-    // get composer?
-
-    // create a dictionary for albumtracks
-    // for(let i = 0; i < tracks.length; i++){
-    //     albumTracks[`title${i+1}`] = {'track_name':tracks[i],'length':tracksSongLength[i]}
-    // }
-
-    //addTrackList(albumTracks)
-
-    // get(wikiURL)
-    // .then((response) => {
-    //     console.log('this is the 2nd time');
-    //     getAlbum(response);
-    //     addTrackList(albumTracks);
-    // });
 }
-
-// searchInput.addEventListener('keypress', function(e) {
-//     var key = e.which || e.keyCode;
-//     if (key === 13) {
-//         URL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=Avengers:_Endgame_(soundtrack)`;
-//         updatePage();
-//     }
-// })
-
-// function updatePage() {
-//     get(URL)
-//     .then((response) =>  {
-//         //some functions here
-//         getAlbum(response);
-//         addTrackList();
-//     });
-
-// }
