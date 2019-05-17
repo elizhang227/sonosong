@@ -65,7 +65,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     // creating error message for when soundtrack not found for movie
     const body = document.getElementById('bodyclass');
     let noSoundTrack = document.createElement('div');
-    noSoundTrack.classList.add('noSoundTrack');
+    noSoundTrack.setAttribute('id', 'noSoundTrack');
     noSoundTrack.textContent = 'NO SOUNDTRACK SUCKER';
 
     // Going through the pages which is wikiURL + searchURLEnding
