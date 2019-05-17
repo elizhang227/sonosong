@@ -7,35 +7,30 @@ function getMovies(omdbMovie) {
     const searchResults = document.getElementById('searchResults');
     const movieList = document.getElementById('movieList');
     movieList.innerHTML = '';
-    //searchResults.style.height = '0px';
 
     if(omdbMovie != undefined){
         if(omdbMovie.Search != undefined){
+            searchResults.style.transition = 'opacity 1s';
+            searchResults.style.opacity = 0;
+
             omdbMovie.Search.forEach(function(movie,index) {
+                
                 // SEARCH INDIVIDUAL FULL
-                var individualMovie = `http://www.omdbapi.com/?i=${movie.imdbID}&plot=full&apikey=${omdb_api_key}`;
+                let individualMovie = `http://www.omdbapi.com/?i=${movie.imdbID}&plot=full&apikey=${omdb_api_key}`;
                 get(individualMovie)
                     .then((response)=>{
-                        let load = document.getElementById('loadingIcon');
-                        load.classList.add('loadingNow')
+                        const load = document.getElementById('loadingIcon');
+                        load.classList.add('loadingNow');
+
+                        searchInput.parentElement.classList.add('searchBar--To-Top')
 
                         setTimeout(function(){
                             getSingleMovie(response,index);
                             document.getElementsByClassName('loadingNow')[0].style.opacity = 0 ;
-                            //searchResults.style.height = movieList.offsetHeight+'px';
+                            searchResults.style.opacity = 1;
                         }, 1500);
                     })
-                    .then(()=>{
-                        console.log(movieList.offsetHeight)
-                        searchInput.parentElement.classList.add('searchBar--To-Top')
-                        // setTimeout(function(){
-                        //     searchResults.style.height = movieList.offsetHeight;
-                        // },1500)
-                    })
             });
-
-            //searchResults.style.display = 'inline';
-            //searchInput.parentElement.classList.add('searchBar--To-Top');
         }
     }
 }
@@ -65,7 +60,6 @@ function getSingleMovie(movie, index){
             moviePoster.src = movie.Poster;
             movieTitle.textContent = movie.Title;
             movieYear.textContent = movie.Year;
-            console.log(movie.Title);
     
             // appending items
             movieItem.append(moviePoster);
@@ -83,8 +77,6 @@ function getSingleMovie(movie, index){
                 //let wikiURL = 'https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=Avengers:_Endgame_(soundtrack%29';
                 get(wikiURL)
                 .then((response) =>  {
-                    console.log(encodeURI(wikiURL))
-                    console.log(movie.Title);
                     getAlbum(response, wikiURL, movie.Year, movie.Title);
                 });
             });

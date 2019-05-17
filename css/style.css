@@ -64,7 +64,7 @@ main {
     width: 100%;
     border: none;
     background-color: inherit;
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid grey;
     color: white;
     height: 1.5em;
     font-size: 1.3em;
@@ -84,7 +84,8 @@ main {
 #searchResults {
     height:auto;
     opacity:0;
-    transition: opacity 0;
+    transition: opacity 1s;
+
     overflow:auto;
 }
 
@@ -122,10 +123,10 @@ main {
     padding: 0px 0px 0 20px;
 }
 
-.youtubeVideoContainer iframe {
+/* .youtubeVideoContainer iframe {
     width: 100%;
     height: 100%;
-}
+} */
 
 #soundTrackList {
     width: 100%;
