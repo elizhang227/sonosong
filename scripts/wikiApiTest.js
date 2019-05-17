@@ -12,15 +12,17 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
     //const searchResults = document.getElementById('searchResults');
     const soundTrackContainer = document.getElementById('soundTrackContainer');
     const moviePic = document.createElement('img');
-    let moviePicName = document.createElement('h2');
+    let moviePicName = document.createElement('div');
 
     //searchResults.style.display = 'none';
     soundTrackContainer.style.transition = 'opacity 1s';
     soundTrackContainer.style.opacity = '1';
 
     moviePic.src = moviePoster;
+    moviePic.classList.add('moviePicture-image-picture');
     moviePicture.append(moviePic);
-    moviePicName = movieTitle;
+    moviePicName.textContent = movieTitle;
+    moviePicName.classList.add('moviePicture-image-name');
     moviePicture.append(moviePicName);
     
 
@@ -62,6 +64,12 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
     // if api does not have title1 then try title_(film) -> title_(year_film) -> title_(soundtrack)
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29'];
+    const body = document.getElementById('bodyclass');
+    // const soundTrackContainer = document.getElementById('soundTrackContainer');
+    let noSoundTrack = document.createElement('div');
+    noSoundTrack.classList.add('noSoundTrack');
+    noSoundTrack.textContent = 'NO SOUNDTRACK SUCKER';
+
 
     // Going through the pages which is wikiURL + searchURLEnding
     if (searchingPage) {
@@ -143,6 +151,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                 }, 1000);
 
                 console.log('NO SOUNDTRACK: '+ err);
+                body.append(noSoundTrack);
             });
     }
 }
