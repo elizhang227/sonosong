@@ -64,7 +64,7 @@ main {
     width: 100%;
     border: none;
     background-color: inherit;
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid grey;
     color: white;
     height: 1.5em;
     font-size: 1.3em;
