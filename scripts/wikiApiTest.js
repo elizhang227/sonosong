@@ -66,7 +66,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     const body = document.getElementById('bodyclass');
     // const soundTrackContainer = document.getElementById('soundTrackContainer');
     let noSoundTrack = document.createElement('div');
-    noSoundTrack.classList.add('noSoundTrack');
+    noSoundTrack.setAttribute('id', 'noSoundTrack');
     noSoundTrack.textContent = 'NO SOUNDTRACK SUCKER';
 
 

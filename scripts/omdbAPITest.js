@@ -8,12 +8,16 @@ let URL = '';
 function getMovies(omdbMovie) {
     const searchResults = document.getElementById('searchResults');
     const movieList = document.getElementById('movieList');
+    const error = document.getElementById('noSoundTrack');
 
     // Resets the soundtrack container elements
     document.getElementById('moviePicture-image').innerHTML = '';
     document.getElementById('soundTrackList').innerHTML = '';
     document.getElementsByClassName('youtubeVideoContainer')[0].childNodes[1].src = '';
+
+    if(error) error.remove();
     
+
     // Empties the list to populate searches
     if(omdbMovie != undefined){
         if(omdbMovie.Search != undefined){
@@ -109,13 +113,6 @@ function getSingleMovie(movie, index){
             });
         }
     }
-}
-
-function updatePage() {
-    get(URL)
-    .then((response) =>  {
-        getMovies(response);
-    });
 }
 
 searchInput.addEventListener('keypress', function(e) {
