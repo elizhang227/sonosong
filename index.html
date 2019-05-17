@@ -1,45 +1,42 @@
 <!doctype html>
 <html class="no-js" lang="">
-
-<head>
-    <meta charset="utf-8">
-    <title>sonoSong - Listen to Movie Soundtracks</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Stylesheet Link -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-    <link href='./css/reset.css' rel='Stylesheet' />
-    <link href='./css/style.css' rel='Stylesheet' />
-    <link href='./css/icon.css' rel='Stylesheet' />
-</head>
-<body id="bodyclass">
-    <figure id='logoContainer'>
-        <img class='logo' src='./images/icon.gif' />
-        <figcaption class='logoName'>sonoSong</figcaption>
-    </figure>
-    <main>
-        <div class='loader loading' id='loadingIcon'>Loading...</div>
-        <div id='searchBar'>
-            <input type="text" id="searchBarBar" placeholder='Enter a Movie' value="">
-            <!-- <p class='searchBar__caption'>Enter a Movie</p> -->
-        </div>
-        <div id='searchResults'>
-            <ul id='movieList'>
-            </ul>
-        </div>
-        <div id='soundTrackContainer'>
-            <div id='soundTrackInfoContainer'>
-                <div id='moviePicture-image'></div>
-                <div class='youtubeVideoContainer'>
-                    <iframe></iframe>
-                </div>
+    <head>
+        <meta charset="utf-8">
+        <title>sonoSong - Listen to Movie Soundtracks</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+        <link href='./css/reset.css' rel='Stylesheet' />
+        <link href='./css/style.css' rel='Stylesheet' />
+        <link href='./css/icon.css' rel='Stylesheet' />
+    </head>
+    <body id="bodyclass">
+        <figure id='logoContainer'>
+            <img class='logo' src='./images/icon.gif' />
+            <figcaption class='logoName'>sonoSong</figcaption>
+        </figure>
+        <main>
+            <div class='loader loading' id='loadingIcon'>Loading...</div>
+            <div id='searchBar'>
+                <input type="text" id="searchBarBar" placeholder='Enter a Movie' value="">
             </div>
-            <ol id='soundTrackList'></ol>
-        </div>
-    </main>
-    <script src='./scripts/get.js'></script>
-    <script src='./scripts/omdbAPITest.js'></script>
-    <script src="./scripts/main.js"></script>
-    <script src="./scripts/wikiApiTest.js"></script>
-</body>
+            <div id='searchResults'>
+                <ul id='movieList'>
+                </ul>
+            </div>
+            <div id='soundTrackContainer'>
+                <div id='soundTrackInfoContainer'>
+                    <div id='moviePicture-image'></div>
+                    <div class='youtubeVideoContainer'>
+                        <iframe></iframe>
+                    </div>
+                </div>
+                <ol id='soundTrackList'></ol>
+            </div>
+        </main>
+        <script src='./scripts/get.js'></script>
+        <script src='./scripts/omdbAPITest.js'></script>
+        <script src="./scripts/main.js"></script>
+        <script src="./scripts/wikiApiTest.js"></script>
+    </body>
 </html>

@@ -1,23 +1,24 @@
-const api_key = "AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk";
-const soundtrackList = document.getElementById('soundTrackList');
-const searchResults = document.getElementById('searchResults');
-const load = document.getElementById('loadingIcon');
-const moviePicture = document.getElementById('moviePicture-image');
+const 
+    api_key = 'AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk',
+    soundtrackList = document.getElementById('soundTrackList'),
+    searchResults = document.getElementById('searchResults'),
+    load = document.getElementById('loadingIcon')
+    moviePicture = document.getElementById('moviePicture-image');
 
-let searchPageCount = 0;
-let searchingPage = false;
+let 
+    searchPageCount = 0,
+    searchingPage = false;
 
 function addTrackList(listOfTracks, movieTitle, moviePoster) {
     let count = 1;
-    //const searchResults = document.getElementById('searchResults');
     const soundTrackContainer = document.getElementById('soundTrackContainer');
     const moviePic = document.createElement('img');
     let moviePicName = document.createElement('div');
 
-    //searchResults.style.display = 'none';
     soundTrackContainer.style.transition = 'opacity 1s';
     soundTrackContainer.style.opacity = '1';
 
+    // Adds movie poster and name to the page with the soundtrack list and youtube video
     moviePic.src = moviePoster;
     moviePic.classList.add('moviePicture-image-picture');
     moviePicture.append(moviePic);
@@ -26,7 +27,7 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
     moviePicture.append(moviePicName);
 
     Object.keys(listOfTracks).forEach(function (key) {
-
+        // Creating list items for songs
         let makeClassItem = document.createElement('li');
         makeClassItem.classList.add('song__item');
 
@@ -46,10 +47,7 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
         makeClassItem.addEventListener('click', function (e) {
             e.preventDefault();
             wordInput = listOfTracks[key].track_name + ' ' + movieTitle;
-            console.log(wordInput);
             ytURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${wordInput}&key=${api_key}`
-            // console.log(wordInput);
-            // updateYTPage();
             get(ytURL)
                 .then((response) => {
                     //some functions here
@@ -61,14 +59,14 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
 
 function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
-    // if api does not have title1 then try title_(film) -> title_(year_film) -> title_(soundtrack)
+    // array for recursion to search specific terms
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29'];
+
+    // creating error message for when soundtrack not found for movie
     const body = document.getElementById('bodyclass');
-    // const soundTrackContainer = document.getElementById('soundTrackContainer');
     let noSoundTrack = document.createElement('div');
     noSoundTrack.setAttribute('id', 'noSoundTrack');
     noSoundTrack.textContent = 'NO SOUNDTRACK SUCKER';
-
 
     // Going through the pages which is wikiURL + searchURLEnding
     if (searchingPage) {
@@ -86,6 +84,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
         let albumTracks = {};
 
         if (content.includes('title1')) {
+            // Regex for getting song names and lengths
             tracks = content.match(/title\d+.+?(?=\n)/g).map((track) => track.replace(/title\d+\s*= /g, ''));
             tracksSongLength = content.match(/length\d+.+?(?=\n)/g).map((songLength) => songLength.replace(/length\d+\s*= /g, ''));
 
@@ -96,7 +95,6 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
             // RESET
             searchingPage = false;
             searchPageCount = 0;
-
             searchResults.style.opacity = 0;
 
             setTimeout(()=>{
@@ -151,6 +149,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                 }, 1000);
 
                 console.log('NO SOUNDTRACK: '+ err);
+                // If no soundtrack available for movie appends error message
                 body.append(noSoundTrack);
             });
     }
