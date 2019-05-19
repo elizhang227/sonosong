@@ -1,19 +1,17 @@
-const 
-    api_key = 'AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk',
+const api_key = 'AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk',
     soundtrackList = document.getElementById('soundTrackList'),
     searchResults = document.getElementById('searchResults'),
     load = document.getElementById('loadingIcon')
     moviePicture = document.getElementById('moviePicture-image');
 
-let 
-    searchPageCount = 0,
+let searchPageCount = 0,
     searchingPage = false;
 
 function addTrackList(listOfTracks, movieTitle, moviePoster) {
-    let count = 1;
     const soundTrackContainer = document.getElementById('soundTrackContainer');
     const moviePic = document.createElement('img');
     let moviePicName = document.createElement('div');
+    let count = 1;
 
     soundTrackContainer.style.transition = 'opacity 1s';
     soundTrackContainer.style.opacity = '1';
@@ -28,21 +26,26 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
 
     Object.keys(listOfTracks).forEach(function (key) {
         // Creating list items for songs
-        let makeClassItem = document.createElement('li');
+        const makeClassItem = document.createElement('li'),
+            trackItem = document.createElement('span'),
+            timeItem = document.createElement('span'),
+            horizontalLine = document.createElement('hr');
+
         makeClassItem.classList.add('song__item');
 
-        let trackItem = document.createElement('span');
         trackItem.classList.add('song__title');
         trackItem.textContent = `${count}.     ` + listOfTracks[key].track_name;
         count += 1;
 
-        let timeItem = document.createElement('span');
         timeItem.classList.add('song__length');
         timeItem.textContent = listOfTracks[key].length;
+
+        horizontalLine.classList.add('trackLine');
 
         makeClassItem.append(trackItem);
         makeClassItem.append(timeItem);
         soundtrackList.append(makeClassItem);
+        soundtrackList.append(horizontalLine)
 
         makeClassItem.addEventListener('click', function (e) {
             e.preventDefault();
@@ -116,6 +119,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                 // RESET
                 searchingPage = false;
                 searchPageCount = 0;
+
                 // Removes loading and sets search results to none
                 searchResults.style.opacity = 0;
     
