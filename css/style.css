@@ -21,15 +21,26 @@ main {
     text-align: center;
 }
 
+.logoLink:link,
+.logoLink:visited,
+.logoLink:hover,
+.logoLink:active {
+    color: inherit;
+}
+
 .logo {
     width: 75px;
 }
 
-.logoName{
-    margin-top:-15px;
+.logoName {
+    margin-top: -15px;
 }
 
-.loading{
+.logoTitleMid {
+    color: #FD4E02;
+}
+
+.loading {
     position: absolute;
     overflow: none;
     width: 300px;
@@ -37,22 +48,23 @@ main {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    opacity:0;
+    opacity: 0;
 }
 
-.loadingNow{
-    opacity:1;
-    height:50px;
+.loadingNow {
+    opacity: 1;
+    height: 50px;
     transition: opacity 0.3s;
 }
 
-.loadingDone{
+.loadingDone {
     transition: opacity 0.3s;
 }
 
 #searchBar {
     position: absolute;
-    overflow: none;;
+    overflow: none;
+    ;
     width: 300px;
     height: auto;
     left: 50%;
@@ -69,17 +81,26 @@ main {
     width: 100%;
     border: none;
     background-color: inherit;
-    border-bottom:1px solid #5c5c5c;
-    color:white;
+    border-bottom: 1px solid #5c5c5c;
+    color: white;
     height: 1.5em;
     font-size: 1.3em;
-    transition:border-color 1s;
+    transition: border-color 1s;
 }
 
-#searchBarBar:focus{
+#searchBarBar::placeholder {
+    transition: color 0.5s;
+}
+
+#searchBarBar:focus::placeholder {
+    color: #1f1e1e;
+    transition: color 0.5s;
+}
+
+#searchBarBar:focus {
     outline: none;
-    color:white;
-    border-color:white;
+    color: white;
+    border-color: #FD4E02;
     transition: border-bottom 1s;
 }
 
@@ -91,10 +112,10 @@ main {
 }
 
 #searchResults {
-    height:auto;
-    opacity:0;
+    height: auto;
+    opacity: 0;
     transition: opacity 1s;
-    overflow:auto;
+    overflow: auto;
 }
 
 #movieList {
@@ -110,14 +131,28 @@ main {
     flex-grow: 1;
     margin: 10px;
     text-align: center;
-    padding:10px;
-    border-radius:10px;
+    padding: 10px;
+    border-radius: 10px;
+    transition: color, background, 0.8s;
+}
+
+.movie__item:hover {
+    background: #252525;
+    color: #FD4E02;
+    transition: color, background, 0.8s;
 }
 
 .movie__item-image {
+    height: 300px;
     width: 200px;
     border-radius: 10px;
     box-shadow: 5px 5px 5px 1px black;
+}
+
+.movie__title {
+    margin: 20px 0 0 0;
+    font-weight: bold;
+    font-size: 1.1em;
 }
 
 #soundTrackContainer {
@@ -128,12 +163,16 @@ main {
 
 #soundTrackInfoContainer {
     display: flex;
-    padding: 0 0 20px 0;
+    padding: 20px 0 50px 0;
 }
 
-.moviePicture-image-picture{
+.moviePicture-image-picture {
     border-radius: 10px;
-    width:150px;
+    width: 150px;
+}
+
+.moviePicture-image-name {
+    text-align: center;
 }
 
 .youtubeVideoContainer {
@@ -151,49 +190,46 @@ main {
 }
 
 .song__item {
-    margin:5px 0;
-    padding:10px;
+    margin: 5px 0;
+    padding: 10px;
     overflow: auto;
-    border-radius:10px;
+    border-radius: 10px;
     position: relative;
-    transition: background-color 0.5s;
-    display:flex;
-    justify-content: space-between
+    display: flex;
+    justify-content: space-between;
+    transition: color, background, ease-in-out 0.5s;
 }
 
-.song__item::after {
-    background-color: grey; 
-    bottom: 0;
-    content: '';
-    display: block;
-    height: 1px;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%,0);
-    width: calc(100% - 50px);
+.trackLine {
+    width: 90%;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-color: #252525
 }
 
-.song__item:last-child{
-    border-bottom:none;
+.song__item:last-child {
+    border-bottom: none;
 }
 
-.song__item:hover{
-    background-color:blue;
-    transition: background-color 0.5s;
+.song__item:hover {
+    background: #252525;
+    color: #FD4E02;
+    transition: color, background, ease-in-out 0.5s;
 }
 
 .song__title {
-    display:inline-block;
+    display: inline-block;
     align-self: flex-start;
-    width:80%
+    width: 80%
 }
 
 .song__length {
-    display:inline-block;
+    display: inline-block;
     align-self: flex-end
 }
 
-#noSoundTrack{
+#noSoundTrack {
     position: absolute;
     overflow: none;
     width: 50%;
@@ -201,4 +237,49 @@ main {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+@media only screen and (max-width: 800px) {
+    #moviePicture-image {
+        display:none;
+    }
+
+    #soundTrackInfoContainer{
+        padding-bottom:20px;
+    }
+
+    .youtubeVideoContainer{
+        padding:0 0 0 0;
+    }
+
+    .youtubeVideoContainer iframe{ 
+        height:300px
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .logoLink{
+        display: block;
+        text-align: center;
+    }
+
+    #searchBar{
+        width:auto;
+    }
+
+    #moviePicture-image {
+        display:none;
+    }
+
+    #soundTrackInfoContainer{
+        padding-bottom:20px;
+    }
+
+    .youtubeVideoContainer{
+        padding:0 0 0 0;
+    }
+
+    .youtubeVideoContainer iframe{ 
+        height:150px
+    }
 }
