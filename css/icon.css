@@ -65,3 +65,45 @@
         height: 5em;
     }
 }
+
+#bars {
+    height: 30px;
+    margin: 0 0 0 10px;
+    position: relative;
+}
+
+.bar {
+    background: #666;
+    bottom: 4px;
+    height: 3px;
+    position: absolute;
+    width: 3px;
+    animation: sound 0ms -800ms linear infinite alternate;
+}
+
+@keyframes sound {
+    0% {
+        opacity: .35;
+        height: 3px;
+    }
+
+    100% {
+        opacity: 1;
+        height: 11px;
+    }
+}
+
+.bar:nth-child(1) {
+    left: 1px;
+    animation-duration: 474ms;
+}
+
+.bar:nth-child(2) {
+    left: 5px;
+    animation-duration: 433ms;
+}
+
+.bar:nth-child(3) {
+    left: 9px;
+    animation-duration: 407ms;
+}

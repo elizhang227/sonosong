@@ -1,9 +1,9 @@
 body {
-    background-color: #040404;
+    background-color: #141414;
     width: 100%;
     height: 100%;
     color: white;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Lato', sans-serif;
     overflow: auto;
     font-size: 16px;
     min-width: 350px;
@@ -23,6 +23,10 @@ main {
 
 .logo {
     width: 75px;
+}
+
+.logoName{
+    margin-top:-15px;
 }
 
 .loading{
@@ -65,14 +69,18 @@ main {
     width: 100%;
     border: none;
     background-color: inherit;
-    border-bottom: 1px solid grey;
-    color: white;
+    border-bottom:1px solid #5c5c5c;
+    color:white;
     height: 1.5em;
     font-size: 1.3em;
+    transition:border-color 1s;
 }
 
 #searchBarBar:focus{
     outline: none;
+    color:white;
+    border-color:white;
+    transition: border-bottom 1s;
 }
 
 .searchBar__caption {
@@ -86,7 +94,6 @@ main {
     height:auto;
     opacity:0;
     transition: opacity 1s;
-
     overflow:auto;
 }
 
@@ -103,11 +110,14 @@ main {
     flex-grow: 1;
     margin: 10px;
     text-align: center;
+    padding:10px;
+    border-radius:10px;
 }
 
 .movie__item-image {
     width: 200px;
     border-radius: 10px;
+    box-shadow: 5px 5px 5px 1px black;
 }
 
 #soundTrackContainer {
@@ -141,13 +151,54 @@ main {
 }
 
 .song__item {
+    margin:5px 0;
+    padding:10px;
     overflow: auto;
+    border-radius:10px;
+    position: relative;
+    transition: background-color 0.5s;
+    display:flex;
+    justify-content: space-between
+}
+
+.song__item::after {
+    background-color: grey; 
+    bottom: 0;
+    content: '';
+    display: block;
+    height: 1px;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,0);
+    width: calc(100% - 50px);
+}
+
+.song__item:last-child{
+    border-bottom:none;
+}
+
+.song__item:hover{
+    background-color:blue;
+    transition: background-color 0.5s;
 }
 
 .song__title {
-    float: left;
+    display:inline-block;
+    align-self: flex-start;
+    width:80%
 }
 
 .song__length {
-    float: right;
+    display:inline-block;
+    align-self: flex-end
+}
+
+#noSoundTrack{
+    position: absolute;
+    overflow: none;
+    width: 50%;
+    height: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
