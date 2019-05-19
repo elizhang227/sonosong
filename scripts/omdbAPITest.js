@@ -16,8 +16,8 @@ function getMovies(omdbMovie) {
     document.getElementById('soundTrackList').innerHTML = '';
     document.getElementsByClassName('youtubeVideoContainer')[0].childNodes[1].src = '';
 
-    if(error) error.remove();
-    
+    if(error) error.remove();   
+
     // Empties the list to populate searches
     if(omdbMovie != undefined){
         if(omdbMovie.Search != undefined){
