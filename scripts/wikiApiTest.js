@@ -33,7 +33,7 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
 
         let trackItem = document.createElement('span');
         trackItem.classList.add('song__title');
-        trackItem.textContent = `${count}. ` + listOfTracks[key].track_name;
+        trackItem.textContent = `${count}.     ` + listOfTracks[key].track_name;
         count += 1;
 
         let timeItem = document.createElement('span');
@@ -47,6 +47,22 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
         makeClassItem.addEventListener('click', function (e) {
             e.preventDefault();
             wordInput = listOfTracks[key].track_name + ' ' + movieTitle;
+
+            const findBars = document.getElementById('bars');
+
+            if(findBars !=  null){
+                findBars.remove();
+            }
+                const bars = document.createElement('span');
+                bars.setAttribute('id','bars')
+
+                for(var i = 0; i<3; i++){
+                    let bar = document.createElement('span');
+                    bar.classList.add('bar')
+                    bars.append(bar)   
+                }
+                makeClassItem.childNodes[0].append(bars)
+
             ytURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${wordInput}&key=${api_key}`
             get(ytURL)
                 .then((response) => {
@@ -61,15 +77,15 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
     // array for recursion to search specific terms
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29'];
-
     // creating error message for when soundtrack not found for movie
-    const body = document.getElementById('bodyclass');
 
     //////////////////
     // LEBRON JAMES //
     //////////////////
 
+    const body = document.getElementById('bodyclass');
     let noSoundTrack = document.createElement('iframe');
+
     noSoundTrack.setAttribute('id', 'noSoundTrack');
     noSoundTrack.src = 'https://www.youtube.com/embed/5y_cl3WIO6A?autoplay=1&loop=1&playlist=5y_cl3WIO6A';
     noSoundTrack.setAttribute('frameborder',0);

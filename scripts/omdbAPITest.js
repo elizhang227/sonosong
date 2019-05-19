@@ -18,7 +18,6 @@ function getMovies(omdbMovie) {
 
     if(error) error.remove();
     
-
     // Empties the list to populate searches
     if(omdbMovie != undefined){
         if(omdbMovie.Search != undefined){
@@ -59,7 +58,7 @@ function getMovies(omdbMovie) {
                             document.getElementsByClassName('loadingNow')[0].style.opacity = 0 ;
                             searchResults.style.opacity = 1;
                         }, 1500);
-                    })
+                    });
             });
         }
     }
@@ -91,7 +90,7 @@ function getSingleMovie(movie, index){
             if(movie.Poster == 'N/A'){
                 moviePoster.src = './images/404Poster.jpg'
             } else {
-                moviePoster.src = movie.Poster;
+                moviePoster.src = movie.Poster
             }    
 
             // appending items
@@ -121,4 +120,4 @@ searchInput.addEventListener('keypress', function(e) {
             getMovies(response);
         });
     }
-})
+});
