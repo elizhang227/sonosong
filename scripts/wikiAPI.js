@@ -19,10 +19,9 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
     // Adds movie poster and name to the page with the soundtrack list and youtube video
     moviePic.src = moviePoster;
     moviePic.classList.add('moviePicture-image-picture');
-    moviePicture.append(moviePic);
     moviePicName.textContent = movieTitle;
     moviePicName.classList.add('moviePicture-image-name');
-    moviePicture.append(moviePicName);
+    moviePicture.append(moviePic,moviePicName);
 
     Object.keys(listOfTracks).forEach(function (key) {
         // Creating list items for songs
@@ -42,10 +41,8 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
 
         horizontalLine.classList.add('trackLine');
 
-        makeClassItem.append(trackItem);
-        makeClassItem.append(timeItem);
-        soundtrackList.append(makeClassItem);
-        soundtrackList.append(horizontalLine)
+        makeClassItem.append(trackItem, timeItem);
+        soundtrackList.append(makeClassItem,horizontalLine);
 
         makeClassItem.addEventListener('click', function (e) {
             e.preventDefault();
@@ -80,7 +77,6 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
     // array for recursion to search specific terms
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29'];
-    // creating error message for when soundtrack not found for movie
 
     //////////////////
     // LEBRON JAMES //
@@ -106,32 +102,6 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
         searchResults.style.opacity = 0;
         searchPageCount++;
         wikiURL = wikiURL.slice(0, wikiURL.length - searchURLEnding[searchPageCount - 1].length);
-    }
-
-    // Function to catch errors and change wikiURL
-    function catchError() {
-        wikiURL = wikiURL + searchURLEnding[searchPageCount];
-        get(wikiURL)
-            .then((response) => {
-                searchingPage = true;
-                getAlbum(response, wikiURL, movieYear, movieTitle, moviePoster);
-            })
-            .catch(err =>{
-                // RESET
-                searchingPage = false;
-                searchPageCount = 0;
-
-                // Removes loading and sets search results to none
-                searchResults.style.opacity = 0;
-    
-                setTimeout(()=> {
-                    load.style.opacity = 0;
-                    searchResults.style.display = 'none'
-                }, 1000);
-    
-                // If no soundtrack available for movie appends error message
-                body.append(noSoundTrack);
-            });
     }
 
     if (!wikiObject.query.pages[0].missing) {
@@ -174,5 +144,33 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
         }
     } else {
         catchError();
+    }
+
+    // Function to catch errors and change wikiURL
+    // catchError scope is only for getAlbum
+    function catchError() {
+        wikiURL = wikiURL + searchURLEnding[searchPageCount];
+
+        get(wikiURL)
+            .then((response) => {
+                searchingPage = true;
+                getAlbum(response, wikiURL, movieYear, movieTitle, moviePoster);
+            })
+            .catch(err =>{
+                // RESET
+                searchingPage = false;
+                searchPageCount = 0;
+
+                // Removes loading and sets search results to none
+                searchResults.style.opacity = 0;
+
+                setTimeout(()=> {
+                    load.style.opacity = 0;
+                    searchResults.style.display = 'none'
+                }, 1000);
+
+                // If no soundtrack available for movie appends error message
+                body.append(noSoundTrack);
+            });
     }
 }
