@@ -83,13 +83,21 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     //////////////////
 
     const body = document.getElementById('bodyclass');
-    let noSoundTrack = document.createElement('iframe');
+    const noSoundTrackContainer = document.createElement('div');
+    const noSoundTitle = document.createElement('p');
+    const noSoundTrack = document.createElement('iframe');
+
+    noSoundTrackContainer.setAttribute('id', 'noSoundTrackContainer');
+    noSoundTitle.classList.add('noSoundTitle');
+    noSoundTitle.textContent = 'Never gonna give you a soundtrack (No soundtrack found)';
 
     noSoundTrack.setAttribute('id', 'noSoundTrack');
     noSoundTrack.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ';
     noSoundTrack.setAttribute('frameborder',0);
     noSoundTrack.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
     noSoundTrack.setAttribute('allowfullscreen','');
+
+    noSoundTrackContainer.append(noSoundTitle, noSoundTrack);
 
     //////////////////
     // LEBRON JAMES //
@@ -170,7 +178,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                 }, 1000);
 
                 // If no soundtrack available for movie appends error message
-                body.append(noSoundTrack);
+                body.append(noSoundTrackContainer);
             });
     }
 }
