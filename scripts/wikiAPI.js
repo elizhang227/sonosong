@@ -86,7 +86,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     let noSoundTrack = document.createElement('iframe');
 
     noSoundTrack.setAttribute('id', 'noSoundTrack');
-    noSoundTrack.src = 'https://www.youtube.com/embed/5y_cl3WIO6A?autoplay=1&loop=1&playlist=5y_cl3WIO6A';
+    noSoundTrack.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ';
     noSoundTrack.setAttribute('frameborder',0);
     noSoundTrack.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
     noSoundTrack.setAttribute('allowfullscreen','');
