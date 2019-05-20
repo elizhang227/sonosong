@@ -1,5 +1,4 @@
-const 
-    omdb_api_key = '414f1f39',
+const omdb_api_key = '414f1f39',
     searchInput = document.getElementById('searchBarBar'),
     movieItem = document.getElementsByClassName('movie__item'),
     soundTrackContainer = document.getElementById('soundTrackContainer');
@@ -7,14 +6,13 @@ const
 let URL = '';
 
 function getMovies(omdbMovie) {
-    const searchResults = document.getElementById('searchResults');
-    const movieList = document.getElementById('movieList');
-    const error = document.getElementById('noSoundTrack');
-
+    const searchResults = document.getElementById('searchResults'),
+        movieList = document.getElementById('movieList'),
+        error = document.getElementById('noSoundTrack');
     // Resets the soundtrack container elements
     document.getElementById('moviePicture-image').innerHTML = '';
     document.getElementById('soundTrackList').innerHTML = '';
-    document.getElementsByClassName('youtubeVideoContainer')[0].childNodes[1].src = '';
+    document.getElementsByClassName('youtubeVideoContainer')[0].childNodes[3].src = '';
 
     if(error) error.remove();   
 
@@ -25,7 +23,7 @@ function getMovies(omdbMovie) {
             searchResults.style.transition = 'opacity 1s';
             searchResults.style.opacity = 0;
             setTimeout(()=>{
-                searchResults.style.display = 'block'
+                searchResults.style.display = 'block';
                 movieList.innerHTML = '';
             }, 1000);
 
@@ -51,7 +49,7 @@ function getMovies(omdbMovie) {
                             document.getElementsByClassName('loadingNow')[0].style.opacity = 1;
                         }
 
-                        searchInput.parentElement.classList.add('searchBar--To-Top')
+                        searchInput.parentElement.classList.add('searchBar--To-Top');
 
                         setTimeout(function(){
                             getSingleMovie(response,index);
@@ -67,13 +65,14 @@ function getMovies(omdbMovie) {
 function getSingleMovie(movie, index){
     if(movie.Runtime != 'N/A'){
         const movieLength = Number(movie.Runtime.match(/\d+/g)[0]);
+
         if(movieLength != null && movieLength > 60){
 
             // creating elements
-            const movieItem = document.createElement('li');
-            const moviePoster = document.createElement('img');
-            const movieTitle = document.createElement('figcaption');
-            const movieYear = document.createElement('figcaption');
+            const movieItem = document.createElement('li'),
+                moviePoster = document.createElement('img'),
+                movieTitle = document.createElement('figcaption'),
+                movieYear = document.createElement('figcaption');
 
             // add classes for styling purposes
             movieItem.classList.add('movie__item');
@@ -90,12 +89,14 @@ function getSingleMovie(movie, index){
             if(movie.Poster == 'N/A'){
                 moviePoster.src = './images/404Poster.jpg'
             } else {
-                moviePoster.src = movie.Poster
+                fetch(movie.Poster)
+                    .then(response=>{
+                        moviePoster.src = response.url
+                    }).catch(moviePoster.src = './images/404Poster.jpg')
             }    
 
             // appending items
-            movieItem.append(moviePoster);
-            movieItem.append(movieTitle);
+            movieItem.append(moviePoster, movieTitle);
             movieList.append(movieItem);
 
             // event listener for each movie
