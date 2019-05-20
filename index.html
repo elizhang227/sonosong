@@ -1,45 +1,70 @@
 <!doctype html>
 <html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <title>sonoSong - Listen to Movie Soundtracks</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">        <link href='./css/reset.css' rel='Stylesheet' />
-        <link href='./css/style.css' rel='Stylesheet' />
-        <link href='./css/icon.css' rel='Stylesheet' />
-    </head>
-    <body id="bodyclass">
-        <a class='logoLink' href='index.html'>
-            <figure id='logoContainer'>
-                <img class='logo' src='./images/icon2.gif' />
-                <figcaption class='logoName'>sono<span class='logoTitleMid'>S</span>ong</figcaption>
-            </figure>
-        </a>
-        <main>
-            <div class='loader loading' id='loadingIcon'></div>
-            <div id='searchBar'>
-                <input id='searchBarBar' type="text" required />
-                <div class="label-text">Enter a Movie</div>
+
+<head>
+    <meta charset="utf-8">
+    <title>sonoSong - Listen to Movie Soundtracks</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <link href='./css/reset.css' rel='Stylesheet' />
+    <link href='./css/style.css' rel='Stylesheet' />
+    <link href='./css/icon.css' rel='Stylesheet' />
+</head>
+
+<body id="bodyclass">
+    <a class='logoLink' href='index.html'>
+        <figure id='logoContainer'>
+            <img class='logo' src='./images/icon2.gif' />
+            <figcaption class='logoName'>sono<span class='logoTitleMid'>S</span>ong</figcaption>
+        </figure>
+    </a>
+    <main>
+        <style>
+        </style>
+        <div class='circleLoad loading' id='loadingIcon'>
+            <div class='circle'>
+                <div class='inner'></div>
             </div>
-            <div id='searchResults'>
-                <ul id='movieList'>
-                </ul>
+            <div class='circle'>
+                <div class='inner'></div>
             </div>
-            <div id='soundTrackContainer'>
-                <div id='soundTrackInfoContainer'>
-                    <div id='moviePicture-image'></div>
-                    <div class='youtubeVideoContainer'>
-                        <iframe></iframe>
-                        <p class='videoInstructions'>Please click on a song below</p>
+            <div class='circle'>
+                <div class='inner'></div>
+            </div>
+            <div class='circle'>
+                <div class='inner'></div>
+            </div>
+            <div class='circle'>
+                <div class='inner'></div>
+            </div>
+        </div>
+        <!-- <div class='loader loading' id='loadingIcon'></div> -->
+        <div id='searchBar'>
+            <input id='searchBarBar' type="text" required />
+            <div class="label-text">Enter a Movie</div>
+        </div>
+        <div id='searchResults'>
+            <ul id='movieList'>
+            </ul>
+        </div>
+        <div id='soundTrackContainer'>
+            <div id='soundTrackInfoContainer'>
+                <div id='moviePicture-image'></div>
+                <div class='youtubeVideoContainer'>
+                    <div class='videoInstructions'>
+                        <span>Please click on a song below</span>
                     </div>
+                    <iframe></iframe>
                 </div>
-                <ol id='soundTrackList'></ol>
             </div>
-        </main>
-        <script src='./scripts/get.js'></script>
-        <script src='./scripts/omdbAPI.js'></script>
-        <script src="./scripts/youtubeAPI.js"></script>
-        <script src="./scripts/wikiApi.js"></script>
-    </body>
+            <ol id='soundTrackList'></ol>
+        </div>
+    </main>
+    <script src='./scripts/get.js'></script>
+    <script src='./scripts/omdbAPI.js'></script>
+    <script src="./scripts/youtubeAPI.js"></script>
+    <script src="./scripts/wikiApi.js"></script>
+</body>
+
 </html>
