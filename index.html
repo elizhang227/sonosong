@@ -12,14 +12,15 @@
     <body id="bodyclass">
         <a class='logoLink' href='index.html'>
             <figure id='logoContainer'>
-                <img class='logo' src='./images/icon.gif' />
+                <img class='logo' src='./images/icon2.gif' />
                 <figcaption class='logoName'>sono<span class='logoTitleMid'>S</span>ong</figcaption>
             </figure>
         </a>
         <main>
-            <div class='loader loading' id='loadingIcon'>Loading...</div>
+            <div class='loader loading' id='loadingIcon'></div>
             <div id='searchBar'>
-                <input type="text" id="searchBarBar" placeholder='Enter a Movie' value="">
+                <input id='searchBarBar' type="text" required />
+                <div class="label-text">Enter a Movie</div>
             </div>
             <div id='searchResults'>
                 <ul id='movieList'>
@@ -36,14 +37,8 @@
             </div>
         </main>
         <script src='./scripts/get.js'></script>
-        <script src='./scripts/omdbAPITest.js'></script>
-        <script src="./scripts/main.js"></script>
-        <script src="./scripts/wikiApiTest.js"></script>
-        <!-- <span id="bars">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </span> -->
-        <!-- <iframe id="noSoundTrack" src="https://www.youtube.com/embed/5y_cl3WIO6A?autoplay=1&amp;loop=1&amp;playlist=5y_cl3WIO6A;&mute=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe> -->
+        <script src='./scripts/omdbAPI.js'></script>
+        <script src="./scripts/youtubeAPI.js"></script>
+        <script src="./scripts/wikiApi.js"></script>
     </body>
 </html>
