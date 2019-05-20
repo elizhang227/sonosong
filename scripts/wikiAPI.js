@@ -103,6 +103,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     if (searchingPage) {
         console.log('LOADING')
         load.style.opacity = 1;
+        searchResults.style.opacity = 0;
         searchPageCount++;
         wikiURL = wikiURL.slice(0, wikiURL.length - searchURLEnding[searchPageCount - 1].length);
     }
@@ -142,7 +143,13 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
 
         if (content.includes('title1')) {
             // Regex for getting song names and lengths
-            tracks = content.match(/title\d+.+?(?=\n)/g).map((track) => track.replace(/title\d+\s*= /g, ''));
+            tracks = content.match(/title\d+.+?(?=\n)/g).map((track) => {
+                if(track.indexOf('[') == -1){
+                    return track.replace(/title\d+\s*= /g, '')
+                } else {
+                    return track.replace(/title\d+\s*= \[+|\]+/g, '')
+                }
+            });
             tracksSongLength = content.match(/length\d+.+?(?=\n)/g).map((songLength) => songLength.replace(/length\d+\s*= /g, ''));
 
             for (let i = 0; i < tracks.length; i++) {
