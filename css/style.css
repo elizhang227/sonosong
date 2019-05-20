@@ -1,6 +1,6 @@
 body {
     background-color: black;
-    /* #141414 */
+    /* color with other icon #141414 */
     width: 100%;
     height: 100%;
     color: white;
@@ -41,21 +41,106 @@ main {
     color: #FD4E02;
 }
 
+/*****************************/
+/**********Loader*************/
+/*****************************/
+
 .loading {
-    position: absolute;
-    overflow: none;
-    width: 300px;
-    height: auto;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     opacity: 0;
     z-index: -10
 }
 
+.circleLoad {
+    position: absolute;
+    width: 75px;
+    height: 77px;
+    border-radius: 100%;
+    top: 45%;
+    left: calc(50% - 37.5px);
+}
+
+.circle {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.circle .inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    border: 5px solid grey;
+    border-right: none;
+    border-top: none;
+    background-clip: padding;
+    box-shadow: inset 0px 0px 10px #FD4E02;
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.circle:nth-of-type(0) {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+.circle:nth-of-type(0) .inner {
+    -webkit-animation: spin 2s infinite linear;
+    animation: spin 2s infinite linear;
+}
+
+.circle:nth-of-type(1) {
+    -webkit-transform: rotate(70deg);
+    transform: rotate(70deg);
+}
+
+.circle:nth-of-type(1) .inner {
+    -webkit-animation: spin 2s infinite linear;
+    animation: spin 2s infinite linear;
+}
+
+.circle:nth-of-type(2) {
+    -webkit-transform: rotate(140deg);
+    transform: rotate(140deg);
+}
+
+.circle:nth-of-type(2) .inner {
+    -webkit-animation: spin 2s infinite linear;
+    animation: spin 2s infinite linear;
+}
+
+.demo {
+    -webkit-animation: spin 5s infinite linear;
+    animation: spin 5s infinite linear;
+}
+
+/*****************************/
+/**********End Loader*********/
+/*****************************/
+
 .loadingNow {
     opacity: 1;
-    height: 50px;
     transition: opacity 0.3s;
 }
 
@@ -112,14 +197,14 @@ main {
     z-index: -1000;
 }
 
-#searchBarBar:focus + .label-text {
+#searchBarBar:focus+.label-text {
     color: #F0F0F0;
     font-size: 13px;
     transform: translateY(-74px);
     left: calc(50% - 44.61px);
 }
 
-#searchBarBar:valid + .label-text {
+#searchBarBar:valid+.label-text {
     font-size: 13px;
     transform: translateY(-74px);
     left: calc(50% - 44.61px);
@@ -192,11 +277,30 @@ main {
 .youtubeVideoContainer {
     width: 100%;
     padding: 0px 0px 0 20px;
+    position:relative;
 }
 
 .youtubeVideoContainer iframe {
     width: 100%;
     height: 100%;
+}
+
+.videoInstructions{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: -10;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    text-align: center;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.videoInstructions span{
+    display:inline;
 }
 
 #soundTrackList {
@@ -278,9 +382,13 @@ main {
     }
 
     #searchBar {
+        margin-top:50px;
         width: auto;
     }
 
+    #searchResults, #soundTrackContainer, #noSoundTrack{
+        margin-top:70px;
+    }
     #moviePicture-image {
         display: none;
     }
