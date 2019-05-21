@@ -347,14 +347,29 @@ main {
     align-self: flex-end
 }
 
+#noSoundTrackContainer{
+    margin-top:100px;
+    text-align:center;
+    width:80%;
+    margin: 100px auto 20px;
+}
+
+#noSoundTrackContainer p{
+    text-transform:uppercase;
+    font-size:1.5em;
+}
+
+#noSoundTrackContainer p>span{
+    font-size:0.8em;
+    font-style: italic;
+    color: #FD4E02
+}
+
 #noSoundTrack {
-    position: absolute;
+    margin:20px auto;
     overflow: none;
-    width: 50%;
-    height: 50%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    width:500px;
+    height:300px;
 }
 
 @media only screen and (max-width: 800px) {
@@ -373,6 +388,12 @@ main {
     .youtubeVideoContainer iframe {
         height: 300px
     }
+
+    #noSoundTrack{
+        margin:20px auto;
+        width:100%;
+        height:250px;
+    }
 }
 
 @media only screen and (max-width: 350px) {
@@ -386,7 +407,7 @@ main {
         width: auto;
     }
 
-    #searchResults, #soundTrackContainer, #noSoundTrack{
+    #searchResults, #soundTrackContainer, #noSoundTrackContainer{
         margin-top:70px;
     }
     #moviePicture-image {
@@ -403,5 +424,11 @@ main {
 
     .youtubeVideoContainer iframe {
         height: 150px
+    }
+
+    #noSoundTrack{
+        margin:20px auto;
+        width:100%;
+        height:200px;
     }
 }
