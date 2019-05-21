@@ -352,6 +352,8 @@ main {
     text-align:center;
     width:80%;
     margin: 100px auto 20px;
+    opacity:0;
+    transition: opacity 1s; 
 }
 
 #noSoundTrackContainer p{

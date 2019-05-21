@@ -87,31 +87,6 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     // array for recursion to search specific terms
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29', '%3A%20Original%20Motion%20Picture%20Soundtrack','%3A%20Music%20from%20the%20Motion%20Picture','%3A%20The%20Motion%20Picture%20Soundtrack','%3A%20Highlights%20from%20the%20Motion%20Picture%20Soundtrack'];
 
-    //////////////////
-    //  RICK ROLL   //
-    //////////////////
-
-    const body = document.getElementById('bodyclass'),
-        noSoundTrackContainer = document.createElement('div'),
-        noSoundTitle = document.createElement('p'),
-        noSoundTrack = document.createElement('iframe');
-
-    noSoundTrackContainer.setAttribute('id', 'noSoundTrackContainer');
-    noSoundTitle.classList.add('noSoundTitle');
-    noSoundTitle.innerHTML = 'Never gonna give you a soundtrack <br><br> <span>(No soundtrack found)</span>';
-
-    noSoundTrack.setAttribute('id', 'noSoundTrack');
-    noSoundTrack.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ';
-    noSoundTrack.setAttribute('frameborder',0);
-    noSoundTrack.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
-    noSoundTrack.setAttribute('allowfullscreen','');
-
-    noSoundTrackContainer.append(noSoundTitle, noSoundTrack);
-
-    //////////////////
-    //  RICK ROLL   //
-    //////////////////
-
     // Going through the pages which is wikiURL + searchURLEnding
     if (searchingPage) {
         console.log('LOADING')
@@ -169,6 +144,31 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     function catchError() {
         wikiURL = wikiURL + searchURLEnding[searchPageCount];
 
+        //////////////////
+        //  RICK ROLL   //
+        //////////////////
+
+        const body = document.getElementById('bodyclass'),
+            noSoundTrackContainer = document.createElement('div'),
+            noSoundTitle = document.createElement('p'),
+            noSoundTrack = document.createElement('iframe');
+
+        noSoundTrackContainer.setAttribute('id', 'noSoundTrackContainer');
+        noSoundTitle.classList.add('noSoundTitle');
+        noSoundTitle.innerHTML = 'Never gonna give you a soundtrack <br><br> <span>(No soundtrack found)</span>';
+
+        noSoundTrack.setAttribute('id', 'noSoundTrack');
+        noSoundTrack.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ';
+        noSoundTrack.setAttribute('frameborder',0);
+        noSoundTrack.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+        noSoundTrack.setAttribute('allowfullscreen','');
+
+        noSoundTrackContainer.append(noSoundTitle, noSoundTrack);
+
+        //////////////////
+        //  RICK ROLL   //
+        //////////////////
+        
         get(wikiURL)
             .then((response) => {
                 searchingPage = true;
@@ -182,13 +182,16 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                 // Removes loading and sets search results to none
                 searchResults.style.opacity = 0;
 
+                body.append(noSoundTrackContainer);
+
                 setTimeout(()=> {
                     load.style.opacity = 0;
-                    searchResults.style.display = 'none'
-                }, 1000);
+                    searchResults.style.display = 'none';
 
-                // If no soundtrack available for movie appends error message
-                body.append(noSoundTrackContainer);
+                    // If no soundtrack available for movie appends error message
+                    noSoundTrackContainer.style.transition = 'opacity 1s';
+                    noSoundTrackContainer.style.opacity = 1;
+                }, 1000);
             });
     }
 }
