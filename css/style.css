@@ -347,14 +347,27 @@ main {
     align-self: flex-end
 }
 
+#noSoundTrackContainer{
+    margin-top:100px;
+    text-align:center;
+    width:80%;
+    margin: 100px auto 20px;
+}
+
+#noSoundTrackContainer p{
+    text-transform:uppercase;
+    font-size:1.5em;
+}
+
+#noSoundTrackContainer p>span{
+    font-size:0.8em;
+    font-style: italic;
+    color: #FD4E02
+}
+
 #noSoundTrack {
-    position: absolute;
+    margin:20px auto;
     overflow: none;
-    width: 50%;
-    height: 50%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
 }
 
 @media only screen and (max-width: 800px) {
@@ -387,7 +400,7 @@ main {
     }
 
     #searchResults, #soundTrackContainer, #noSoundTrack{
-        margin-top:70px;
+        margin-top:0px;
     }
     #moviePicture-image {
         display: none;
