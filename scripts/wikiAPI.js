@@ -78,7 +78,7 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
 function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
     // array for recursion to search specific terms
-    const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29', '%3A%20Original%20Motion%20Picture%20Soundtrack','%3A%20Music%20from%20the%20Motion%20Picture'];
+    const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29', '%3A%20Original%20Motion%20Picture%20Soundtrack','%3A%20Music%20from%20the%20Motion%20Picture','%3A%20The%20Motion%20Picture%20Soundtrack','%3A%20Highlights%20from%20the%20Motion%20Picture%20Soundtrack'];
 
     //////////////////
     //  RICK ROLL   //
