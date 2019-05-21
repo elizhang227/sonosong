@@ -1,10 +1,12 @@
+'use strict';
+
 const omdb_api_key = '414f1f39',
     searchInput = document.getElementById('searchBarBar'),
     movieItem = document.getElementsByClassName('movie__item'),
     soundTrackContainer = document.getElementById('soundTrackContainer');
 
-let URL = '';
-let searchPressed = false,
+let URL = '',
+    searchPressed = false,
     moviePressed = false;
 
 function getMovies(omdbMovie) {
@@ -13,12 +15,24 @@ function getMovies(omdbMovie) {
         error = document.getElementById('noSoundTrackContainer');
     // Resets the soundtrack container elements
 
-    document.getElementById('moviePicture-image').innerHTML = '';
-    document.getElementById('soundTrackList').innerHTML = '';
     document.getElementsByClassName('youtubeVideoContainer')[0].childNodes[3].src = '';
     movieList.innerHTML = '';
 
-    if(error) error.remove();   
+    // Checks if the user has soundTrackContainer displayed
+    // It will be displayed if the movie has or doesnt have a soundtrack
+    if(soundTrackContainer.style.display == 'block'){
+        // Used time out function to wait for transition
+        soundTrackContainer.style.transition = 'opacity 0.2s';
+        soundTrackContainer.style.opacity = 0;
+
+        setTimeout(() => {
+            soundTrackContainer.style.display = 'none',
+            document.getElementById('moviePicture-image').innerHTML = '';
+            document.getElementById('soundTrackList').innerHTML = '';
+        }, 200);
+    }
+
+    if(error) error.remove();
 
     // Empties the list to populate searches
     if(omdbMovie != undefined){
@@ -30,15 +44,6 @@ function getMovies(omdbMovie) {
             setTimeout(() => {
                 searchResults.style.display = 'block';
             }, 1000);
-
-            // Checks if the user has soundTrackContainer displayed
-            // It will be displayed if the movie has or doesnt have a soundtrack
-            if(soundTrackContainer.style.display == 'block'){
-                // Used time out function to wait for transition
-                soundTrackContainer.style.transition = 'opacity 1s';
-                soundTrackContainer.style.opacity = 0;
-                setTimeout(()=>soundTrackContainer.style.display = 'none', 1000);
-            }
 
             omdbMovie.Search.forEach(function(movie,index) {
                 // SEARCH INDIVIDUAL FULL
@@ -57,7 +62,7 @@ function getMovies(omdbMovie) {
 
                         setTimeout(function(){
                             getSingleMovie(response,index);
-                            document.getElementsByClassName('loadingNow')[0].style.opacity = 0 ;
+                            document.getElementsByClassName('loadingNow')[0].style.opacity = 0;
                             searchResults.style.opacity = 1;
                         }, 1500);
                     });
@@ -122,6 +127,7 @@ function getSingleMovie(movie, index){
 
 searchInput.addEventListener('keypress', function(e) {
     let key = e.which || e.keyCode;
+
     if (key === 13) {
         let search = this.value;
         URL = `http://www.omdbapi.com/?s=${search}&plot=full&apikey=${omdb_api_key}`;

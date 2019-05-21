@@ -1,20 +1,20 @@
+'use strict';
+
 const api_key = 'AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk',
     soundtrackList = document.getElementById('soundTrackList'),
     searchResults = document.getElementById('searchResults'),
-    load = document.getElementById('loadingIcon')
+    load = document.getElementById('loadingIcon'),
     moviePicture = document.getElementById('moviePicture-image');
 
 let searchPageCount = 0,
     searchingPage = false;
 
 function addTrackList(listOfTracks, movieTitle, moviePoster) {
-    const soundTrackContainer = document.getElementById('soundTrackContainer');
-    const moviePic = document.createElement('img');
-    let moviePicName = document.createElement('div');
-    let count = 1;
+    const soundTrackContainer = document.getElementById('soundTrackContainer'),
+        moviePic = document.createElement('img');
 
-    soundTrackContainer.style.transition = 'opacity 1s';
-    soundTrackContainer.style.opacity = '1';
+    let moviePicName = document.createElement('div'),
+        count = 1;
 
     // Adds movie poster and name to the page with the soundtrack list and youtube video
     moviePic.src = moviePoster;
@@ -22,7 +22,12 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
     moviePicName.textContent = movieTitle;
     moviePicName.classList.add('moviePicture-image-name');
     moviePicture.append(moviePic,moviePicName);
-    
+
+    setTimeout(() => {
+        soundTrackContainer.style.transition = 'opacity 1s';
+        soundTrackContainer.style.opacity = '1';
+    },100);
+
     Object.keys(listOfTracks).forEach(function (key) {
         // Creating list items for songs
         const makeClassItem = document.createElement('li'),
@@ -48,62 +53,39 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
 
         makeClassItem.addEventListener('click', function (e) {
             e.preventDefault();
-            wordInput = listOfTracks[key].track_name + ' ' + movieTitle;
+            let wordInput = listOfTracks[key].track_name + ' ' + movieTitle,
+                ytURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${wordInput}&key=${api_key}`
 
-            const findBars = document.getElementById('bars');
+            const findBars = document.getElementById('bars'),
+                bars = document.createElement('span');
 
             if(findBars !=  null){
                 findBars.remove();
             }
-                const bars = document.createElement('span');
-                bars.setAttribute('id','bars')
 
-                for(var i = 0; i<3; i++){
-                    let bar = document.createElement('span');
-                    bar.classList.add('bar')
-                    bars.append(bar)   
-                }
-                makeClassItem.childNodes[0].append(bars)
+            bars.setAttribute('id','bars')
 
-            ytURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${wordInput}&key=${api_key}`
+            for(var i = 0; i<3; i++){
+                let bar = document.createElement('span');
+                bar.classList.add('bar')
+                bars.append(bar)   
+            }
+
+            makeClassItem.childNodes[0].append(bars)
+
             get(ytURL)
                 .then((response) => {
                     //some functions here
                     getVideoId(response);
                 });
-        })
-    })
+        });
+    });
 }
 
 function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     // URL CODES : https://www.w3schools.com/tags/ref_urlencode.asp
     // array for recursion to search specific terms
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29', '%3A%20Original%20Motion%20Picture%20Soundtrack','%3A%20Music%20from%20the%20Motion%20Picture','%3A%20The%20Motion%20Picture%20Soundtrack','%3A%20Highlights%20from%20the%20Motion%20Picture%20Soundtrack'];
-
-    //////////////////
-    //  RICK ROLL   //
-    //////////////////
-
-    const body = document.getElementById('bodyclass');
-    const noSoundTrackContainer = document.createElement('div');
-    const noSoundTitle = document.createElement('p');
-    const noSoundTrack = document.createElement('iframe');
-
-    noSoundTrackContainer.setAttribute('id', 'noSoundTrackContainer');
-    noSoundTitle.classList.add('noSoundTitle');
-    noSoundTitle.innerHTML = 'Never gonna give you a soundtrack <br><br> <span>(No soundtrack found)</span>';
-
-    noSoundTrack.setAttribute('id', 'noSoundTrack');
-    noSoundTrack.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ';
-    noSoundTrack.setAttribute('frameborder',0);
-    noSoundTrack.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
-    noSoundTrack.setAttribute('allowfullscreen','');
-
-    noSoundTrackContainer.append(noSoundTitle, noSoundTrack);
-
-    //////////////////
-    //  RICK ROLL   //
-    //////////////////
 
     // Going through the pages which is wikiURL + searchURLEnding
     if (searchingPage) {
@@ -117,9 +99,9 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     if (!wikiObject.query.pages[0].missing) {
         const content = wikiObject.query.pages[0].revisions[0].content;
 
-        let tracks = '';
-        let tracksSongLength = '';
-        let albumTracks = {};
+        let tracks = '',
+            tracksSongLength = '',
+            albumTracks = {};
 
         if (content.includes('title1')) {
             // Regex for getting song names and lengths
@@ -162,6 +144,31 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     function catchError() {
         wikiURL = wikiURL + searchURLEnding[searchPageCount];
 
+        //////////////////
+        //  RICK ROLL   //
+        //////////////////
+
+        const body = document.getElementById('bodyclass'),
+            noSoundTrackContainer = document.createElement('div'),
+            noSoundTitle = document.createElement('p'),
+            noSoundTrack = document.createElement('iframe');
+
+        noSoundTrackContainer.setAttribute('id', 'noSoundTrackContainer');
+        noSoundTitle.classList.add('noSoundTitle');
+        noSoundTitle.innerHTML = 'Never gonna give you a soundtrack <br><br> <span>(No soundtrack found)</span>';
+
+        noSoundTrack.setAttribute('id', 'noSoundTrack');
+        noSoundTrack.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ';
+        noSoundTrack.setAttribute('frameborder',0);
+        noSoundTrack.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+        noSoundTrack.setAttribute('allowfullscreen','');
+
+        noSoundTrackContainer.append(noSoundTitle, noSoundTrack);
+
+        //////////////////
+        //  RICK ROLL   //
+        //////////////////
+        
         get(wikiURL)
             .then((response) => {
                 searchingPage = true;
@@ -175,13 +182,16 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                 // Removes loading and sets search results to none
                 searchResults.style.opacity = 0;
 
+                body.append(noSoundTrackContainer);
+
                 setTimeout(()=> {
                     load.style.opacity = 0;
-                    searchResults.style.display = 'none'
-                }, 1000);
+                    searchResults.style.display = 'none';
 
-                // If no soundtrack available for movie appends error message
-                body.append(noSoundTrackContainer);
+                    // If no soundtrack available for movie appends error message
+                    noSoundTrackContainer.style.transition = 'opacity 1s';
+                    noSoundTrackContainer.style.opacity = 1;
+                }, 1000);
             });
     }
 }
