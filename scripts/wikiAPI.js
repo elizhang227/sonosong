@@ -79,7 +79,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     const searchURLEnding = ['%20%28film%29', '%20%20%28' + movieYear + '%20film%29', '%20%28soundtrack%29'];
 
     //////////////////
-    // LEBRON JAMES //
+    //  RICK ROLL   //
     //////////////////
 
     const body = document.getElementById('bodyclass');
@@ -89,7 +89,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
 
     noSoundTrackContainer.setAttribute('id', 'noSoundTrackContainer');
     noSoundTitle.classList.add('noSoundTitle');
-    noSoundTitle.textContent = 'Never gonna give you a soundtrack (No soundtrack found)';
+    noSoundTitle.innerHTML = 'Never gonna give you a soundtrack <br><br> <span>(No soundtrack found)</span>';
 
     noSoundTrack.setAttribute('id', 'noSoundTrack');
     noSoundTrack.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ';
@@ -100,7 +100,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     noSoundTrackContainer.append(noSoundTitle, noSoundTrack);
 
     //////////////////
-    // LEBRON JAMES //
+    //  RICK ROLL   //
     //////////////////
 
     // Going through the pages which is wikiURL + searchURLEnding
