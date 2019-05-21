@@ -1,4 +1,5 @@
-api_key = 'AIzaSyB9WzlCfQKAWzLTqAsrcepelEEUT4b8NPk';
+'use strict';
+
 const videoDiv = document.getElementsByClassName('youtubeVideoContainer')[0];
 
 function getVideoId(object) {
