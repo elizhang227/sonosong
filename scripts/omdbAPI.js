@@ -8,7 +8,7 @@ let URL = '';
 function getMovies(omdbMovie) {
     const searchResults = document.getElementById('searchResults'),
         movieList = document.getElementById('movieList'),
-        error = document.getElementById('noSoundTrack');
+        error = document.getElementById('noSoundTrackContainer');
     // Resets the soundtrack container elements
     document.getElementById('moviePicture-image').innerHTML = '';
     document.getElementById('soundTrackList').innerHTML = '';
