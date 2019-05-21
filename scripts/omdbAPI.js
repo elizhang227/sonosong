@@ -4,15 +4,19 @@ const omdb_api_key = '414f1f39',
     soundTrackContainer = document.getElementById('soundTrackContainer');
 
 let URL = '';
+let searchPressed = false,
+    moviePressed = false;
 
 function getMovies(omdbMovie) {
     const searchResults = document.getElementById('searchResults'),
         movieList = document.getElementById('movieList'),
         error = document.getElementById('noSoundTrackContainer');
     // Resets the soundtrack container elements
+
     document.getElementById('moviePicture-image').innerHTML = '';
     document.getElementById('soundTrackList').innerHTML = '';
     document.getElementsByClassName('youtubeVideoContainer')[0].childNodes[3].src = '';
+    movieList.innerHTML = '';
 
     if(error) error.remove();   
 
@@ -22,9 +26,9 @@ function getMovies(omdbMovie) {
             // CSS Stylings for when we have movies
             searchResults.style.transition = 'opacity 1s';
             searchResults.style.opacity = 0;
-            setTimeout(()=>{
+
+            setTimeout(() => {
                 searchResults.style.display = 'block';
-                movieList.innerHTML = '';
             }, 1000);
 
             // Checks if the user has soundTrackContainer displayed
@@ -99,12 +103,17 @@ function getSingleMovie(movie, index){
             movieItem.append(moviePoster, movieTitle);
             movieList.append(movieItem);
 
+            searchPressed = false;
+
             // event listener for each movie
             movieItem.addEventListener('click',function(e){
                 let wikiURL = `https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&origin=*&format=json&formatversion=2&titles=${movieTitle.textContent}`;
                 get(wikiURL)
                 .then((response) =>  {
-                    getAlbum(response, wikiURL, movie.Year, movie.Title, moviePoster.src);
+                    if(moviePressed == false){
+                        moviePressed = true;
+                        getAlbum(response, wikiURL, movie.Year, movie.Title, moviePoster.src);
+                    }
                 });
             });
         }
@@ -116,9 +125,14 @@ searchInput.addEventListener('keypress', function(e) {
     if (key === 13) {
         let search = this.value;
         URL = `http://www.omdbapi.com/?s=${search}&plot=full&apikey=${omdb_api_key}`;
+
         get(URL)
         .then((response) =>  {
-            getMovies(response);
+            moviePressed = false;
+            if(searchPressed == false){
+                searchPressed = true;
+                getMovies(response);
+            }
         });
     }
 });
