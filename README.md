@@ -1,6 +1,8 @@
+http://ec2-18-221-169-73.us-east-2.compute.amazonaws.com/
+
 sonoSong (sono means 'that' in japanese, so our name means 'that song')
 
-#Overview
+# Overview
 
 We created a website where users are able to find the complete soundtrack for any movie they want, all conveniently located on one page and clicking on songs will load the youtube video so users do not have to copy and paste the title of the song from some other website into youtube.
 
@@ -13,7 +15,7 @@ For our project we used 3 APIs:
 
 I worked on the backend starting with APIs and getting the json file to display the information on the screen and RJ started on the front-end with HTML and CSS and we merged in the middle to help each other out with features we wanted to add to the website.
 
-##Our code and how it works (PLAY-BY-PLAY)
+## Our code and how it works (PLAY-BY-PLAY)
 
 We had to use API keys for Youtube and OMDB, Wikipedia did not require one.
 
@@ -25,12 +27,12 @@ We had to use API keys for Youtube and OMDB, Wikipedia did not require one.
 6. user then clicks on desired song 
 7. song title is then sent to the Youtube API where it grabs the first video from the search results and embeds it to the screen
 
-##Quirky Features
+## Quirky Features
 
 1. Clicking on our Logo Icon will reload the original page where you input a movie title.
 2. You can search for a different movie on the page with the search results without having to refresh the page or go back to the home page.
 
-##Major Struggles/Difficulties
+## Major Struggles/Difficulties
 
 1. Recursion - 
 
