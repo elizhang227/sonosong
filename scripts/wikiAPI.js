@@ -29,6 +29,7 @@ function addTrackList(listOfTracks, movieTitle, moviePoster) {
     },100);
 
     Object.keys(listOfTracks).forEach(function (key) {
+
         // Creating list items for songs
         const makeClassItem = document.createElement('li'),
             trackItem = document.createElement('span'),
@@ -112,6 +113,7 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                     return track.replace(/title\d+\s*= \[+|\]+/g, '')
                 }
             });
+
             tracksSongLength = content.match(/length\d+.+?(?=\n)/g).map((songLength) => songLength.replace(/length\d+\s*= /g, ''));
 
             for (let i = 0; i < tracks.length; i++) {
@@ -137,7 +139,6 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
     } else {
         catchError();
     }
-
 
     // Function to catch errors and change wikiURL
     // catchError scope is only for getAlbum
@@ -182,13 +183,13 @@ function getAlbum(wikiObject, wikiURL, movieYear, movieTitle, moviePoster) {
                 // Removes loading and sets search results to none
                 searchResults.style.opacity = 0;
 
+                // If no soundtrack available for movie appends error message
                 body.append(noSoundTrackContainer);
 
                 setTimeout(()=> {
                     load.style.opacity = 0;
                     searchResults.style.display = 'none';
 
-                    // If no soundtrack available for movie appends error message
                     noSoundTrackContainer.style.transition = 'opacity 1s';
                     noSoundTrackContainer.style.opacity = 1;
                 }, 1000);
