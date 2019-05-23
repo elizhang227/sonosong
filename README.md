@@ -1,3 +1,5 @@
+http://ec2-18-221-169-73.us-east-2.compute.amazonaws.com/
+
 sonoSong (sono means 'that' in japanese, so our name means 'that song')
 
 # Overview
