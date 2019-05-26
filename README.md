@@ -2,7 +2,7 @@
 
 http://ec2-18-221-169-73.us-east-2.compute.amazonaws.com/
 
-sonoSong (sono means 'that' in japanese, so our name means 'that song')
+sono*S*ong (sono means '*that*' in japanese, so our name means '*that song*')
 
 ## Overview
 
@@ -18,6 +18,7 @@ For our project we used 3 APIs:
 Eli worked on the backend starting with APIs and getting the json file to display the information on the screen and RJ started on the front-end with HTML and CSS and we merged in the middle to help each other out with features we wanted to add to the website.
 
 ### Our code and how it works (PLAY-BY-PLAY)
+---
 
 We had to use API keys for Youtube and OMDB, Wikipedia did not require one.
 
@@ -30,31 +31,33 @@ We had to use API keys for Youtube and OMDB, Wikipedia did not require one.
 7. song title is then sent to the Youtube API where it grabs the first video from the search results and embeds it to the screen
 
 ### Quirky Features
+---
 
 1. Clicking on our Logo Icon will reload the original page where you input a movie title.
 2. You can search for a different movie on the page with the search results without having to refresh the page or go back to the home page.
 
 ### Major Struggles/Difficulties
+---
 
-1. Wikipedia API:
+1. *Wikipedia API*:
 
 We find an API that had information about the soundtracks of movies and after doing a lot of searching the only "reliable" place we could find it was via the Wikipedia API (We were in for a treat using this API). We decided on this because it's the same data source that google uses when searching for movie soundtracks. The documentation for the Wikipedia API was helpful and they had an example API link with query parameters. It was easier to navigate than the youtube API. However, the information from this API was formatted in a way where all the content on the page was stored in a 20000 plus character string. The  we had to use regex to filter out the information we needed (being relatively new to regex, we had to learn how to specify our queries). In addition, we learned that there was no consistency in the format on the actual Wikipedia page where they place the soundtrack information. For some movies the soundtracks would be on the mainpage of movie, and for others it would be on a different site with a different title which meant it was a totally different JSON file. For example if you searched Avengers, there is a link on that page which redirects you to a separate page and the title of that page is "Avengers (soundtrack). Our solution was to make a few fail safe cases if just the movie title did not work and put them into an array and we had to loop through the array and check if any of those concatenated search parameters yielded a page with the soundtrack.
 
-2. Wikipedia Content:
+2. *Wikipedia Content*:
 
 We mentioned that wikipedia has inconsistencies between URL links, we eventually found out that the content had consistencies as well.
 
-2. Recursion:
+2. *Recursion*:
 
 We noticed shortly after starting the project that when we searched wikipedia for movie soundtrack it might be stored on a different wiki page. We noticed a common pattern looking through movie pages that had soundtracks. For example, if we did a wiki API call on The_Avengers and we didn't find a sound track it would concatinate one of the following ['(film)', '(year film)','(soundtrack)', ... ] which would display The_Avengers (film), The_Avengers (2012 film), etc... Using promises we decided it was a good way to incorporate recursion into our program so that it looks through our list until it finds a soundtrack. If we searched through the list and didn't find a soundtrack we would display 'No Sound Track Found'.
 
-3. Youtube API:
+3. *Youtube API*:
 
 Step one for our project and I think one of the biggest hurdles in the beginning was understanding and getting the APIs to work and being able to see the json file with all the information. Getting the Youtube API to work was a struggle for me because structuring the correct query parameters was difficult to understand and I couldn't find an example of it but some tinkering and experimenting was done and finally we got the API link to work and we could finally start grabbing data from the json file.
 
 When a user clicks on a song from the soundtrack list it will return the json file of the search results on Youtube and what we had to do was filter and drill down to get the videoId and make some fail safe cases for results that came back that weren't videos (playlists). We then use the first video found for those results and grab the videoId to embedd the video on our website. There is an empty iframe tag in the place where the videos pop-up and whenever we click on a song we just set the iframe src to the corresponding youtube video and that gets updated with the video of the song on the screen. With that, the Youtube API was done.
 
-4. Transitioning:
+4. *Transitioning*:
 
 Once we were done with the core JavaScript, we wanted to make our website look smooth when querying APIs or removing data. It was more of an annoyance than a difficulty to find where we needed to place those transitions within the JavaScript. We decided to use JavaScript to insert CSS so that the CSS is inserted inline and so that we can see what is happening instead of adding and removing classes.
 
