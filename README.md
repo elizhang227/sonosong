@@ -4,6 +4,10 @@ http://ec2-18-221-169-73.us-east-2.compute.amazonaws.com/
 
 sonoSong (sono means 'that' in japanese, so our name means 'that song')
 
+## Sample Search for a Movie Soundtrack
+
+![](./images/main_tutorial.gif)
+
 ## Overview
 
 We created a website where users are able to find the complete soundtrack for any movie they want, all conveniently located on one page and clicking on songs will load the youtube video so users do not have to copy and paste the title of the song from some other website into youtube.
