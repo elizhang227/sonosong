@@ -1,10 +1,16 @@
 # sonoSong - Listen to Movie Soundtracks
 
-http://ec2-18-221-169-73.us-east-2.compute.amazonaws.com/
+### A Digital Crafts Project Created by Eli Zhang and RJ Salamanca
+
+**Click Here: [sonoSong - Website](http://ec2-18-221-169-73.us-east-2.compute.amazonaws.com/)**
 
 sono***S***ong (sono means '***that***' in japanese, so our name means '***that song***')
 
-## Overview
+### Sample Search for a Movie Soundtrack
+
+![](./images/main_tutorial.gif)
+
+### Overview
 
 We created a website where users are able to find the complete soundtrack for any movie they want, all conveniently located on one page and clicking on songs will load the youtube video so users do not have to copy and paste the title of the song from some other website into youtube.
 
@@ -16,6 +22,10 @@ For our project we used 3 APIs:
     Youtube: where we retrieved the song/video from
 
 Eli worked on the backend starting with APIs and getting the json file to display the information on the screen and RJ started on the front-end with HTML and CSS and we merged in the middle to help each other out with features we wanted to add to the website.
+
+### sonoSong is Web Responsive
+
+![](./images/responsive_tutorial.gif)
 
 ### Our code and how it works (PLAY-BY-PLAY)
 ---
@@ -45,7 +55,7 @@ We find an API that had information about the soundtracks of movies and after do
 
 2. ***Wikipedia Content***:
 
-We mentioned that wikipedia has inconsistencies between URL links, we eventually found out that the content had consistencies as well.
+We mentioned that wikipedia has inconsistencies between URL links, we eventually found out that the content had consistencies as well. In our regex queries, we noticed that MOST movie soundtracks started with 'title1'. We would gather all the information after 'title1' until it reached 'title2'. The problem with this was we found out that some pages included html tags or non conventional characters such as the '|' character or brackets. After looking through many pages, we decided that we would skip on filtering out these outliers with the limited time we had.
 
 3. ***Recursion***:
 
@@ -61,3 +71,37 @@ When a user clicks on a song from the soundtrack list it will return the json fi
 
 Once we were done with the core JavaScript, we wanted to make our website look smooth when querying APIs or removing data. It was more of an annoyance than a difficulty to find where we needed to place those transitions within the JavaScript. We decided to use JavaScript to insert CSS so that the CSS is inserted inline and so that we can see what is happening instead of adding and removing classes.
 
+### Limitations to funtionality
+---
+
+1. Super Specific Wikipages
+
+Some pages have very specific soundtrack page names that are only unique to 1 or 2 movies. For example, the movie Moulan Rouge! the movie link is https://en.wikipedia.org/wiki/Moulin_Rouge!, normally we would do the following to search for the soundtrack if its not found on that page:
+
+    https://en.wikipedia.org/wiki/Moulin_Rouge! + (film)
+    https://en.wikipedia.org/wiki/Moulin_Rouge! + (2012%20film)
+    https://en.wikipedia.org/wiki/Moulin_Rouge! + (soundtrack)
+    https://en.wikipedia.org/wiki/Moulin_Rouge! + (Original Motion Picture Soundtrack)
+    https://en.wikipedia.org/wiki/Moulin_Rouge! + (Music from the motion Picture)
+    https://en.wikipedia.org/wiki/Moulin_Rouge! + (The Motion Picture Soundtrack)
+    https://en.wikipedia.org/wiki/Moulin_Rouge! + (Highlights from the Motion Picture Soundtrack)
+
+The soundtrack is actually stored on:
+    https://en.wikipedia.org/wiki/Moulin_Rouge! + Music from Baz Luhrmann's Film.
+Ultimately, our program can't get all movie soundtracks even if they are in the Wiki API.
+
+2. Movies With the Exact Same Title
+
+There are some movies that are more popular than others. There are a lot of movies that don't have wiki pages. For example, if we have search 'The Avengers' that starred Uma Thurman and Sean Connery, you will also see 'The Avengers' Marvel Movie. The way we search through pages (we query the pages in order in #1) it will most likely find The Avengers Marvel movie and display their soundtrack instead.
+
+3. Youtube Embed Unavailable
+
+Since most youtube videos we looked up had an embed code, we automatically assumed that embedding Youtube videos on our website wouldn't cause us any problems. We found out close to finishing that almost none of our videos were working locally. Once we pushed our project to EC2, most of the videos worked. Youtube video creators can deny the use of embed on their videos.
+
+4. Short Films
+
+Near the beginning, when we searched movies there would be many short films associated with the big production film we we're looking for. We created a filter to only populate movies that are more than 60 minutes in length. You will be unable to search for movies that are shorter than an hour.
+
+5. Non Exact Title / Autofill
+
+We did not create an autofill or similar match function. If you're searching for a movie, spaces and unique characters are required. For example, if you're looking for Les Misérables, you will need to type the 'é' character.
