@@ -1,6 +1,6 @@
 # sonoSong - Listen to Movie Soundtracks
 
-## A Digital Crafts Project Created by Eli Zhang and RJ Salamanca
+### A Digital Crafts Project Created by Eli Zhang and RJ Salamanca
 
 **Click Here: [sonoSong - Website](http://ec2-18-221-169-73.us-east-2.compute.amazonaws.com/)**
 
