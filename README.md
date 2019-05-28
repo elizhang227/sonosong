@@ -1,6 +1,6 @@
 # sonoSong - Listen to Movie Soundtracks
 
-http://ec2-18-221-169-73.us-east-2.compute.amazonaws.com/
+Click Here: [sonoSong - Website][http://ec2-18-221-169-73.us-east-2.compute.amazonaws.com/]
 
 sono***S***ong (sono means '***that***' in japanese, so our name means '***that song***')
 
@@ -20,6 +20,10 @@ For our project we used 3 APIs:
     Youtube: where we retrieved the song/video from
 
 Eli worked on the backend starting with APIs and getting the json file to display the information on the screen and RJ started on the front-end with HTML and CSS and we merged in the middle to help each other out with features we wanted to add to the website.
+
+### sonoSong is Web Responsive
+
+![](./images/responsive_tutorial.gif)
 
 ### Our code and how it works (PLAY-BY-PLAY)
 ---
@@ -66,6 +70,7 @@ When a user clicks on a song from the soundtrack list it will return the json fi
 Once we were done with the core JavaScript, we wanted to make our website look smooth when querying APIs or removing data. It was more of an annoyance than a difficulty to find where we needed to place those transitions within the JavaScript. We decided to use JavaScript to insert CSS so that the CSS is inserted inline and so that we can see what is happening instead of adding and removing classes.
 
 ### Limitations to funtionality
+---
 
 1. Super Specific Wikipages
 
@@ -89,6 +94,12 @@ There are some movies that are more popular than others. There are a lot of movi
 
 3. Youtube Embed Unavailable
 
+Since most youtube videos we looked up had an embed code, we automatically assumed that embedding Youtube videos on our website wouldn't cause us any problems. We found out close to finishing that almost none of our videos were working locally. Once we pushed our project to EC2, most of the videos worked. Youtube video creators can deny the use of embed on their videos.
+
 4. Short Films
 
+Near the beginning, when we searched movies there would be many short films associated with the big production film we we're looking for. We created a filter to only populate movies that are more than 60 minutes in length. You will be unable to search for movies that are shorter than an hour.
+
 5. Non Exact Title / Autofill
+
+We did not create an autofill or similar match function. If you're searching for a movie, spaces and unique characters are required. For example, if you're looking for Les Misérables, you will need to type the 'é' character.
